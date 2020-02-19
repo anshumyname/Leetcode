@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int findNthDigit(int num) {
+        if(num<10) return num;
+        int dig=1;
+        long long n=9;
+        int i=1;
+        while(n<num){
+            n+=((i+1)*9*pow(10,i));
+            dig++;
+            i++;
+        }
+        n-=((i)*9*pow(10,i-1));
+        long long act=pow(10,dig-1)+(num-n)/dig;
+        int ind=(num-n)%dig;
+        if(!ind) {
+            act--;
+            ind+=(dig);
+        }
+        string s=to_string(act);
+        return int(s[ind-1]-'0');
+        
+        
+    }
+};

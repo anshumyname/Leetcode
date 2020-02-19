@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int numFriendRequests(vector<int>& ages) {
+        if(!ages.size()) return 0;
+        unordered_map<int,int> mp;
+        for(int &a: ages)
+            mp[a]++;
+        ages.clear();
+       
+        
+       
+        int ans=0;
+        for(auto& i:mp){
+            for(auto& j: mp){
+                if(i.first!=j.first){
+                    if(request(i.first,j.first)){
+                        ans+=(i.second*j.second);
+                    }
+                }
+                else if(i.first==j.first){
+                    if(request(i.first,j.first))
+                        ans+=(i.second*(i.second-1));
+                }
+                
+                cout<<ans<<" ";
+            }
+            
+            
+        }
+        
+        return ans;
+    }
+    
+    bool request(int a, int b) {
+        return !(b <=(0.5 * a + 7) || b > a || (b > 100 && a < 100));
+    }
+};
+
+
+
