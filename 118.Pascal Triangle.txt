@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<vector<int>> ans;
+    vector<vector<int>> generate(int numRows) {
+        ans.push_back({1});
+        if(!numRows) return {};
+        if(numRows==1) return ans;
+        getRow(numRows);
+        return ans;
+    }
+    
+    vector<int> getRow(int A) {
+    if(A==1){ans.push_back({1}); return {1};}
+    if(A==2){ans.push_back({1,1}); return {1,1};}
+    
+    vector<int> prev=getRow(A-1);
+    vector<int> temp={1};
+    for(int i=1;i<prev.size();i++){
+        int ins=prev[i]+prev[i-1];
+        temp.push_back(ins);
+    }
+    temp.push_back(1);
+    ans.push_back(temp);
+    return temp;
+    }
+
+};
