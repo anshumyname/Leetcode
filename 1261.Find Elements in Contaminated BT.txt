@@ -1,0 +1,39 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class FindElements {
+public:
+    TreeNode* head;
+    FindElements(TreeNode* root) {
+        head=root;
+        helper(root,0);
+    }
+    
+    void helper(TreeNode* root,int pval){
+        if(!root) return;
+        root->val=pval;
+        helper(root->left,2*root->val+1);
+        helper(root->right,2*root->val+2);
+    }
+    
+    bool find(int tar){
+        return finder(tar,head);
+    }
+    bool finder(int target,TreeNode* r) {
+        if(!r) return false;
+        if(r->val==target) return true;
+        return finder(target,r->left) or finder(target,r->right);
+    }
+};
+
+/**
+ * Your FindElements object will be instantiated and called as such:
+ * FindElements* obj = new FindElements(root);
+ * bool param_1 = obj->find(target);
+ */
