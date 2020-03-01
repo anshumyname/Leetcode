@@ -1,0 +1,34 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    N=1e9+7;
+    ans=0
+    total=0;
+    def maxProduct(self, root: TreeNode) -> int:
+        self.update(root);
+        self.total=root.val;
+        self.traverse(root);
+        return int(self.ans%self.N);
+    
+    def update(self, root: TreeNode)->int :
+        if None==root : return 0;
+        ssum=0;
+        if None==root.left and None==root.right: return root.val;
+        
+        ssum+=(self.update(root.left));
+        ssum+=(self.update(root.right));
+        root.val+=ssum;
+        return root.val;
+    
+    def traverse(self, root: TreeNode)->int:
+        if None==root: return 0;
+        self.traverse(root.left);
+        self.ans=max(self.ans,root.val*(self.total-root.val)); 
+        self.traverse(root.right);
+        return 0
+        
