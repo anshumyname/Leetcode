@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<int> v;
+    int findCircleNum(vector<vector<int>>& M) {
+        v.resize(M.size(),-1);
+        if(!M.size()) return 0;
+        for(int i=0;i<M.size();i++) 
+            v[i]=i;
+        
+        for(int i=0;i<M.size();i++){
+            for(int j=0;j<M[i].size();j++){
+                if(M[i][j]) 
+                    unione(i,j);
+            }
+        }
+        int c=0;
+        for(int i=0;i<M.size();i++)
+            if(v[i]==i)
+                c++;
+        
+        return c;
+        
+    }
+    
+    int getparent(int x){
+        if(v[x]==x) return x;
+        
+        return getparent(v[x]);
+    }
+    
+    void unione(int x,int y){
+        int a=getparent(x);
+        int b=getparent(y);
+        if(a!=b){
+            v[a]=b;
+        }
+    }
+};
