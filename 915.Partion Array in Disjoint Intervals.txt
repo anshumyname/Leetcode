@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int partitionDisjoint(vector<int>& A) {
+        int d=0;
+        int mx=A[0];
+        int v=mx;
+        
+        for(int i=0;i<A.size();i++){
+            mx=max(mx,A[i]);
+            if(A[i]<v)
+            {
+                d=i;
+                v=mx;
+            }
+        }
+        
+        return d+1;
+        
+        
+    }
+};
