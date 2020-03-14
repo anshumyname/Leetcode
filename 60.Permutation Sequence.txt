@@ -1,0 +1,36 @@
+class Solution {
+public:
+    string getPermutation(int n, int k) {
+        vector<int> v(n);
+        for(int i=1;i<=n;i++) 
+            v[i-1]=i;
+        for(int i=1;i<k;i++)
+            next(v);
+        string s;
+        for(auto k: v)
+            s+=to_string(k);
+        return s;
+    }
+    
+    void next(vector<int>& v){
+        int n=v.size();
+        int l=n-1,k=n-1;;
+        while(k>0 && v[k]<v[k-1]) k--;
+        
+        if(k==0){
+            reverse(v.begin(),v.end());
+            return;
+        }
+        for(;l>=k;l--){
+            
+            if(v[k-1]<v[l]){
+                break;
+            }
+        }
+        
+        
+        swap(v[k-1],v[l]);
+       
+        reverse(v.begin()+k,v.end());
+    }
+};
