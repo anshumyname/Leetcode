@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int getMoneyAmount(int n) {
+        vector<vector<int>> v(n+1,vector<int> (n+1,0));
+        return helper(v,1,n);
+    }
+    
+    int helper(vector<vector<int>>& dp,int s,int e){
+        if(s>=e) return 0;
+        if(dp[s][e]) return dp[s][e];
+        int res=INT_MAX;
+        for(int x=s;x<=e;x++){
+            int temp=x+max(helper(dp,s,x-1),helper(dp,x+1,e));
+            res=min(res,temp);
+        }
+        dp[s][e]=res;
+        return res;
+    }
+};
