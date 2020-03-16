@@ -1,0 +1,39 @@
+class Solution {
+public:
+     
+    string convert(string s, int n) {
+        if(n==1) return s;
+        int x=s.length();
+        vector<vector<char>> v(n);
+        int i=0,j=0,k=0;
+        bool flag=true;
+        string ss;
+        while(k<s.length()){
+            v[i].push_back(s[k]);
+            k++;
+            if(flag){ i++; }
+            if(!flag){ i--; j++;}
+            
+            if(i>n-1 && flag==true){
+                flag=false;
+                i-=2;
+                j++;
+            }
+            
+            if(i<0 && flag==false){
+                i+=2;
+                j--;
+                flag=true;
+            }
+        }
+        
+        
+        for(auto i: v){
+            for(auto x: i)
+                ss+=x;
+        }
+        
+      
+        return ss;
+    }
+};
