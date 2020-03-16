@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<string> ans;
+    vector<string> generateParenthesis(int n) {
+        helper("",0,0,n);
+        return ans;
+    }
+    
+    string helper(string k,int i,int j,int n){
+        if(k.length()==2*n){
+            ans.push_back(k); return "";
+        }
+        
+        if(i<n){
+            helper(k+"(",i+1,j,n);
+        }
+        if(j<i){
+            helper(k+")",i,j+1,n);
+        }
+        return "";
+    }
+};
