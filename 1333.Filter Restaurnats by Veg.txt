@@ -1,0 +1,25 @@
+class Solution {
+public:
+    static bool comp(pair<int,int> p1,pair<int,int> p2){
+        if(p1.first==p2.first)
+            return p1.second>p2.second;
+        return p1.first>p2.first;
+    }
+    vector<int> filterRestaurants(vector<vector<int>>& restaurants,int veg, int mxPri, int mxD) {
+        vector<pair<int,int>> ans;
+        for(auto re: restaurants){
+            if((!(!re[2]&veg))){
+                if(re[3]<=mxPri && re[4]<=mxD)
+                ans.push_back({re[1],re[0]});
+            }
+        }
+        
+        sort(ans.begin(),ans.end(),comp);
+        vector<int> fin;
+        for(auto p: ans)
+            fin.push_back(p.second);
+        return fin;
+        
+        
+    }
+};

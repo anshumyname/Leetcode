@@ -1,0 +1,26 @@
+class Solution {
+public:
+    unordered_map<char,int> mp;
+    int numberOfSubstrings(string s) {
+        int sb=0,start=0;
+        for(int i=0;i<s.length();i++){
+            mp[s[i]]++;
+            if(check()){
+                sb+=(s.length()-i);
+                mp[s[start]]--; start++;
+                while(check()){
+                    //start++;
+                    sb+=(s.length()-i);
+                    mp[s[start]]--;
+                    start++;
+                }
+            }
+        }
+           
+        return sb;
+    }
+    
+    bool check(){
+        return (mp['a']>=1 && mp['b']>=1 && mp['c']>=1);
+    }
+};

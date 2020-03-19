@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int arrayNesting(vector<int>& nums) {
+        int ans=0;
+        for(int i=0;i<nums.size();i++){
+            int tar=nums[i];
+            int k=i;
+            int c=0;
+            while(nums[k]!=i){
+                k=nums[k];
+                c++;
+            }
+            ans=max(ans,c+1);
+        }
+        return ans;
+    }
+};
