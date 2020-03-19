@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int minSetSize(vector<int>& arr) {
+        map<int,int,greater<int>> mp;
+        for(auto k: arr)
+            mp[k]++;
+        
+        priority_queue<int, vector<int> > pq;
+        int n=arr.size();
+        int sum=0,k=0;
+        for(auto it:mp){
+            pq.push(it.second);
+        }
+        
+        while(!pq.empty()){
+            sum+=pq.top();
+          
+            pq.pop();
+            k++;
+          
+            if(sum>=n/2){
+                return k;
+            }
+        
+        }
+        return k;
+        
+    }
+};

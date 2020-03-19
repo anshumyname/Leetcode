@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maxChunksToSorted(vector<int>& arr) {
+        int ch=0;
+        vector<int> copy=arr;
+        sort(copy.begin(),copy.end());
+        multiset<int> exp;
+        multiset<int> actual;
+        
+        for(int i=0;i<arr.size();i++){
+            exp.insert(copy[i]);
+            actual.insert(arr[i]);
+            if(exp==actual){
+                ch++;
+            }
+        }
+        return ch;
+    }
+};

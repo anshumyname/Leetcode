@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int minSteps(string s, string t) {
+        unordered_map<char,int> mp;
+        for(auto c: t)
+            mp[c]++;
+        for(auto c: s)
+            mp[c]--;
+        
+        int sum=0,neg=0;
+        for(auto k: mp){
+            if(k.second<0) 
+                neg+=(-k.second);
+            sum+=k.second;
+        }
+        return sum?sum:neg;
+            
+    }
+};
