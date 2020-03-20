@@ -1,0 +1,35 @@
+class Solution {
+public:
+    static bool comp(pair<int,int> p1,pair<int,int> p2){
+        return p1.second>p2.second;
+    }
+    vector<int> rearrangeBarcodes(vector<int>& bc) {
+        unordered_map<int,int> mp;
+        for(auto k: bc)
+            mp[k]++;
+        vector<pair<int,int>> v(mp.begin(),mp.end());
+        sort(v.begin(),v.end(),comp);
+        vector<int> ans(bc.size());
+        int k=0,p=0,ko=1;
+        while(p<v.size() && k<ans.size()){
+            while(v[p].second && k<ans.size()){
+                ans[k]=v[p].first;
+                v[p].second--;
+                k+=2;
+            }
+            if(!v[p].second) p++;
+        }
+        
+        while(p<v.size() && ko<ans.size()){
+            while(v[p].second && ko<ans.size()){
+                ans[ko]=v[p].first;
+                v[p].second--;
+                ko+=2;
+            }
+            if(!v[p].second) p++;
+        }
+        
+        return ans;
+        
+    }
+};

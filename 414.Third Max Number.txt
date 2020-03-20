@@ -1,0 +1,39 @@
+class Solution {
+public:
+    
+    int thirdMax(vector<int>& nums) {
+        set<int> s;
+        int c=0;
+        for(auto k: nums){
+            if(s.find(k)==s.end()) {
+                c++;
+                s.insert(k);
+            }
+            if(c>=3){
+                break;
+            } 
+        }
+        
+         if(c<3){
+                return *max_element(s.begin(),s.end());
+        }
+        
+        int max=INT_MIN;
+        int secmax=INT_MIN;
+        int thirmax=INT_MIN;
+        
+        find(nums,INT_MAX,&max);
+        find(nums,max,&secmax);
+        find(nums,secmax,&thirmax);
+        return thirmax;
+    }
+    
+    void find(vector<int>& nums,int limit,int *mx){
+        for(int i=0;i<nums.size();i++){
+            if(*mx<=nums[i] &&  nums[i]<limit){
+                *mx=nums[i];
+            }
+        }
+        
+    }
+};
