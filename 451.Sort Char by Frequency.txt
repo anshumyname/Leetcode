@@ -1,0 +1,21 @@
+class Solution {
+public:
+    static bool comp(pair<char,int> p1,pair<char,int> p2){
+        return p1.second>p2.second;
+    }
+    string frequencySort(string s) {
+        map<char,int> mp;
+        string ans;
+        for(auto k: s)
+            mp[k]++;
+        vector<pair<char,int>> v(mp.begin(),mp.end());
+        sort(v.begin(),v.end(),comp);
+        for(auto c: v){
+            string x= string(c.second,c.first);
+            ans+=x;
+        }
+        
+        return ans;
+        
+    }
+};
