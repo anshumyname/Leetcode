@@ -1,0 +1,23 @@
+class Solution {
+public:
+    static bool comp(string x,string y){
+        return x+y>y+x;
+        
+    }
+    string largestNumber(vector<int>& nums) {
+        vector<string> v;
+        for(auto k: nums)
+            v.push_back(to_string(k));
+        
+        sort(v.begin(),v.end(),comp);
+        string ans;
+        for(auto s: v)
+            ans+=s;
+        
+        int l=ans.length();
+        string zeros(l,'0');
+        if(ans==zeros)
+            ans="0";
+        return ans;
+    }
+};

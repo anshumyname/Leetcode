@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maxWidthRamp(vector<int>& A) {
+        int n=A.size();
+        int maxlen=0;
+        vector<int> help(99999,0);
+       
+        for(int i=0;i<n;i++)
+            help[A[i]]=i;
+       
+        for(int x=help.size()-2;x>=0;x--){
+            help[x]=max(help[x],help[x+1]);
+        }
+       
+        for(int x=0;x<n;x++)
+            maxlen=max(maxlen,help[A[x]]-x);
+        return maxlen;
+    }
+};
