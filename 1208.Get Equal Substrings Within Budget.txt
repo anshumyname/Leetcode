@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int equalSubstring(string s, string t, int sum) {
+        int n=s.length();
+        vector<int> cost(n,0);
+        for(int i=0;i<n;i++){
+            cost[i]=abs(t[i]-s[i]);
+        }
+        int left=0,right=0;
+        int tempcost=0;
+        while(right<n){
+            tempcost+=cost[right];
+            right++;
+            if(tempcost>sum){
+                tempcost-=cost[left];
+                left++;
+            }
+        }
+        
+        return right-left;
+        
+    }
+};
