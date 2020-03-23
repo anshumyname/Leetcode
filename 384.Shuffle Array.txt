@@ -1,0 +1,48 @@
+class Solution {
+public:
+    vector<int> num,orig;
+    Solution(vector<int>& nums) {
+        num=nums;
+        orig=nums;
+    }
+    
+    /** Resets the array to its original configuration and return it. */
+    vector<int> reset() {
+        //num=orig;
+        return orig;
+    }
+    
+    /** Returns a random shuffling of the array. */
+    vector<int> shuffle() {
+        next(num);
+        return num;
+    }
+    
+    void next(vector<int>& nums){
+        int n=nums.size();
+        int i=0;
+        if(n<=1) return;
+        for(i=n-2;i>=0;i--)
+            if(nums[i]<nums[i+1])
+                break;
+        
+        if(i==-1){
+            reverse(nums.begin(),nums.end());
+            return;
+        }
+        int k=n-1;
+        for(;k>i;k--)
+            if(nums[k]>nums[i])
+                break;
+        swap(nums[i],nums[k]);
+        reverse(nums.begin()+i+1,nums.end());        
+                
+    }
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(nums);
+ * vector<int> param_1 = obj->reset();
+ * vector<int> param_2 = obj->shuffle();
+ */

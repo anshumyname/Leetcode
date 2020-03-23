@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int longestSubstring(string s, int k) {
+        int n=s.length();
+        if(!n || k>n) return 0;
+        
+        if(!k) return n;
+        unordered_map<char,int> mp;
+        for(int i=0;i<n;i++)
+            mp[s[i]]++;
+            
+        int x=0;
+        for(;x<n;x++)
+            if(mp[s[x]]<k)
+                break;
+        
+        if(x==n) return n;
+        int left=longestSubstring(s.substr(0,x),k);
+         while (x<n && mp[s[x]] < k) x++;
+        int right= longestSubstring(s.substr(x),k);
+        return max(left,right);
+    }
+};
