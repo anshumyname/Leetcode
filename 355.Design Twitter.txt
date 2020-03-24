@@ -1,0 +1,60 @@
+class Twitter {
+public:
+    /** Initialize your data structure here. */
+    unordered_map<int,vector<int>> followers;
+    unordered_map<int,vector<pair<int,int>>> tweets;
+    int t=0;
+    Twitter() {
+        
+    }
+    
+    /** Compose a new tweet. */
+    void postTweet(int userId, int tweetId) {
+        tweets[userId].push_back({t++,tweetId});
+    }
+    
+    /** Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent. */
+    vector<int> getNewsFeed(int userId) {
+        priority_queue<pair<int,int>> pq;
+        for(auto e: tweets[userId])
+            pq.push(e);
+        
+        for(int i=0;i<followers[userId].size();i++)
+        {
+            if(followers[userId][i]!=userId)
+                for(int j=0;j<tweets[followers[userId][i]].size();j++)
+                    pq.push(tweets[followers[userId][i]][j]);
+        }
+        vector<int> v;
+        for(int i=0;i<10;i++){
+            if(!pq.size()) break;
+            v.push_back(pq.top().second);
+            pq.pop();
+        }
+        return  v;
+        
+    }
+    
+    /** Follower follows a followee. If the operation is invalid, it should be a no-op. */
+    void follow(int fwer, int fee) {
+        auto it=find(followers[fwer].begin(),followers[fwer].end(),fee);
+        if(it!=followers[fwer].end()) return;
+         followers[fwer].push_back(fee);
+    }
+    
+    /** Follower unfollows a followee. If the operation is invalid, it should be a no-op. */
+    void unfollow(int fwerId, int feeId) {
+        auto it=find(followers[fwerId].begin(),followers[fwerId].end(),feeId);
+        if(it==followers[fwerId].end()) return;
+        followers[fwerId].erase(it);
+    }
+};
+
+/**
+ * Your Twitter object will be instantiated and called as such:
+ * Twitter* obj = new Twitter();
+ * obj->postTweet(userId,tweetId);
+ * vector<int> param_2 = obj->getNewsFeed(userId);
+ * obj->follow(followerId,followeeId);
+ * obj->unfollow(followerId,followeeId);
+ */

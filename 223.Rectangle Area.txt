@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+        
+        int l1=D-B; int w1=C-A;
+        int l2=G-E; int w2=H-F;
+        if(min(C,G)<max(A,E) || min(D,H)<max(B,F)) return (l1*w1)+(l2*w2);
+        int w=min(C,G)-max(A,E);
+        int h=min(D,H)-max(B,F);
+           
+        return l1*w1-h*w+l2*w2;
+        
+    }
+};
