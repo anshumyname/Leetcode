@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int maxNumberOfFamilies(int n, vector<vector<int>>& reservedSeats) {
+        unordered_map<int,set<int>> s;
+         for(auto ss: reservedSeats)
+             s[ss[0]].insert(ss[1]);//v[{s[0],s[1]}]++;
+        
+        int c=0;
+        for(auto k: s){
+            int i=k.first;
+            bool two=s[i].find(2)==s[i].end();
+            bool three=s[i].find(3)==s[i].end();
+            bool four=s[i].find(4)==s[i].end();
+            bool five=s[i].find(5)==s[i].end();
+            bool six=s[i].find(6)==s[i].end();
+            bool seven=s[i].find(7)==s[i].end();
+            bool eight=s[i].find(8)==s[i].end();
+            bool nine=s[i].find(9)==s[i].end();
+            bool first=(two and three and four and five);
+            bool second=(four and five and six and seven);
+            bool third= (six and seven and eight and nine);
+            if(first && third){
+                c+=2;
+            }else if(second || third || first){
+                c++;
+            }
+        }
+        
+        int k=n-s.size();
+        c+=(2*k);
+        return c;
+    }
+};
