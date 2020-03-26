@@ -1,0 +1,26 @@
+
+class Solution {
+public:
+    vector<int> constructArray(int n, int k) {
+        vector<int> v(n);
+        int t=k;
+        if(n==1) return {1};
+        for(int i=0;i<n;i++) v[i]=i+1;
+        
+        for(int i=0;i<k+1;i++){
+            if(i&1){
+                v[i]=v[i-1]+t;
+                t--;
+            }
+            else{
+                if(i==0) v[i]=1;
+                else{
+                    v[i]=v[i-1]-t;
+                    t--;
+                    }
+                }
+            }
+        return v;
+        
+    }
+};
