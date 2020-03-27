@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<int> primes;
+    int sumFourDivisors(vector<int>& nums) {
+        //Soe(1e5+1);
+        int n=nums.size();
+        int sum=0;
+        for(int i=0;i<n;i++){
+           auto  v= count(nums[i]);
+            if(v.size()==2 && v[0]!=v[1]){
+                
+                sum+=(1+v[0]+v[1]+nums[i]);
+            }
+        }
+        return sum;
+    }
+    
+    vector<int> count(int x){
+        int i=2;
+        
+        vector<int> v;
+        
+        while(i*i<=x){
+            if(x%i==0){
+                v.push_back(i);
+                v.push_back(x/i);
+                if(v.size()>2){
+                    break;
+                }
+                
+            }
+            i++;
+        }
+        
+        return v;
+    }
+    
+};
