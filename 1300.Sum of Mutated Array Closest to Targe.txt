@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int findBestValue(vector<int>& arr, int target) {
+        int low=0;
+        int high=1000000;
+        int mid=(low+high)/2;
+        
+        while(low<high){
+            
+            int sum= calc(arr,mid);
+           //cout<<mid<<" "<<sum<<endl;
+            if(sum>=target){
+                high=mid;
+            }
+            else{
+                low=mid+1;
+            }
+            mid=low+(high-low)/2;
+        }
+        
+        int sum1= calc(arr,mid-1);
+        int sum2= calc(arr,mid);
+        if(abs(target-sum1)<=abs(target-sum2)) return mid-1;
+        
+        cout<<mid;
+        return mid;
+    }
+    
+    int calc(vector<int>& arr,int x){
+        int sum=0;
+        for(auto v: arr){
+            sum+=(v>x?x:v);
+        }
+        return sum;
+    }
+};

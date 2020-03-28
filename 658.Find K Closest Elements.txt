@@ -1,0 +1,22 @@
+int X;
+bool comp(int x,int y){
+    if(abs(x-X)==abs(y-X))
+        return x<y;
+    return abs(x-X)<abs(y-X);
+}
+
+class Solution {
+public:
+
+    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+        int n=arr.size();
+        X=x;
+        vector<int> ans;
+        sort(arr.begin(),arr.end(),comp);
+        int i=0;
+        while(ans.size()!=k)
+               ans.push_back(arr[i++]);
+        sort(ans.begin(),ans.end());
+        return ans;
+    }
+};
