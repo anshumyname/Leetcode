@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int minEatingSpeed(vector<int>& piles, int H) {
+        int low=1;
+        int high=*max_element(piles.begin(),piles.end());
+        while(low<high){
+            int mid=low+(high-low)/2;
+            int t=time(piles,mid);
+            if(t<=H)
+                high=mid;
+            else{
+                low=mid+1;
+            }
+        }
+        return high;
+    }
+    
+    int time(vector<int>& p,int x){
+        int n=0;
+        for(auto ban: p){
+            n+=ceil((ban+0.0)/x);
+        }
+        return n;
+    }
+};

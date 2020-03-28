@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int longestOnes(vector<int>& s, int k) {
+        int maxlen=0;
+        int start=0,end=0;
+        int maxc=0,glob=0;
+        bool hasone=false;
+        for(;end<s.size();end++){
+            if(s[end]==1){hasone=true; maxc++;}
+            
+            if(end-start+1-maxc>k){
+                
+                glob=max(glob,end-start);
+                while(start<end && s[start]!=0){
+                       start++;
+                       maxc--;
+                }
+                
+                start++;
+            
+            }
+        }
+        
+        if(!hasone) return 0;
+        if(maxc==s.size()) return s.size();
+        return max(glob,end-start);
+        
+    }
+};
+

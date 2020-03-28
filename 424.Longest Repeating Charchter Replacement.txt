@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+        vector<int> f(26,0);
+        int maxlen=0;
+        int start=0,end=0;
+        int maxc=0,glob=0;
+        for(;end<s.length();end++){
+            maxc=max(maxc,++f[s[end]-'A']);
+            if(end-start+1-maxc>k){
+                glob=max(glob,end-start);
+                f[s[start]-'A']--;
+                start++;
+                maxc=*max_element(f.begin(),f.end());
+            }
+        }
+        return max(glob,end-start);
+        
+    }
+};
