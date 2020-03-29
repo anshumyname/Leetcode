@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool static comp(pair<int,int> p1,pair<int,int> p2){
+        return p1.first>p2.first;
+    }
+    int largestValsFromLabels(vector<int>& values, vector<int>& labels, int num_wanted, int use_limit) {
+        vector<pair<int,int>> v;
+        int n=values.size();
+        for(int i=0;i<n;i++)
+            v.push_back({values[i],i});
+        unordered_map<int,int> mp;
+        sort(v.begin(),v.end(),comp);
+        int sum=0;
+        int taken=0;
+        for(int i=0; i<n ;i++){
+            if(taken>=num_wanted)
+                break;
+            if(mp[labels[v[i].second]]<use_limit){
+                sum+=v[i].first;
+                taken++;
+                mp[labels[v[i].second]]++;
+            }
+            
+        }
+        
+        return sum;
+    }
+};
