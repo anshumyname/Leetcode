@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool static comp(vector<int> v1,vector<int> v2){
+        if(v1[0]==v2[0])
+            return v1[1]<v2[1];
+        return v1[0]>v2[0];
+    }
+    vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
+        vector<vector<int>> v;
+        if(!people.size()) return {};
+        sort(people.begin(),people.end(),comp);
+        int t=people[0][0];
+        int i=0;
+        while(i<people.size() && people[i][0]==t){
+            v.push_back(people[i++]);
+        }
+        
+        for(; i<people.size();i++){
+            v.insert(v.begin()+people[i][1],people[i]);
+        }
+        return v;
+    }
+};

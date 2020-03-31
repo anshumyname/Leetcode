@@ -1,0 +1,8 @@
+class Solution {
+public:
+    vector<int> numOfBurgers(int tomato, int cheese) {
+        int j=tomato/2-cheese;
+        if(tomato%2!=0 || j<0 || cheese-j<0) return {};
+        return {j,cheese-j};
+    }
+};
