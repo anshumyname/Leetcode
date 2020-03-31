@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int bagOfTokensScore(vector<int>& tokens, int P) {
+       int pow=P;
+        if(!tokens.size() or !P) return 0;
+        int n=tokens.size()-1;
+       sort(tokens.begin(),tokens.end());
+        if(tokens[0]>P) return 0;
+        if(n==0) return 1; 
+        int low=0,high=n;
+        int ans=0;
+        while(low<high){
+            int c=rangecount(tokens,low,high,P);
+            int k=rangecount(tokens,low+1,high-1,P-tokens[low]+tokens[high]);
+            ans=max(max(k,ans),c);
+            P=P-tokens[low]+tokens[high];
+            low++;
+            high--;
+        }
+        
+        return ans;
+        
+    }
+    
+    int rangecount(vector<int>& tokens,int l,int h,int P){
+        int c=0;
+        int temp=P;
+        for(int i=l;i<=h && (temp-tokens[i])>=0;i++){
+            if(tokens[i]<=temp){
+                temp-=tokens[i];
+                c++;
+            }
+        }
+        
+        return c;
+    }
+};
