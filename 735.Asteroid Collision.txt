@@ -1,0 +1,43 @@
+class Solution {
+public:
+    vector<int> asteroidCollision(vector<int>& ast) {
+        vector<int> v;
+        stack<int> s;
+        for(int i=0;i<ast.size();i++){
+            if(ast[i]>0){
+                s.push(i);
+            }
+            else{
+                if(s.empty()){
+                    v.push_back(i);
+                    continue;
+                }
+                bool equal=false;
+                while(s.size()){
+                    if(ast[s.top()]<(-ast[i]))
+                        s.pop();
+                    else if(ast[s.top()]==(-ast[i])){
+                        equal=true;
+                        s.pop();
+                        break;
+                    }
+                    else if(ast[s.top()]>(-ast[i]))
+                        break;
+                }
+                
+                if(!s.size() && !equal) v.push_back(i);
+                
+            }
+        }
+        
+        while(s.size()){
+            v.push_back(s.top());
+            s.pop();
+        }
+        
+        sort(v.begin(),v.end());
+        for(int i=0;i<v.size();i++)
+            v[i]=ast[v[i]];
+        return v;
+    }
+};
