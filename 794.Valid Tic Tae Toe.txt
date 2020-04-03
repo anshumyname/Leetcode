@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool validTicTacToe(vector<string>& board) {
+        int xs=0,os=0;
+        for(auto s: board){
+            for(auto c: s)
+            {
+                if(c=='X') xs++;
+                else if(c=='O')
+                    os++;
+            }
+        }
+        
+        if((xs-os)==1 && !win(board,'O')) return true;
+        else if((xs-os)==1 && win(board,'O')) return false;
+        if((xs-os)>1 || (xs-os)<0) return false;
+        
+       
+        if(win(board,'X') && xs==os)
+            return false;
+        return true;
+    }
+    
+    bool win(vector<string>& board,char c){
+        bool r1= (board[0][0]==c && board[0][1]==c && board[0][2]==c) || (board[0][0]==c && board[1][0]==c && board[2][0]==c);
+        bool r2= (board[0][0]==c && board[1][1]==c && board[2][2]==c) || (board[0][2]==c && board[1][1]==c && board[2][0]==c);
+        bool r3= (board[2][2]==c && board[0][2]==c && board[1][2]==c) || (board[2][0]==c && board[2][1]==c && board[2][2]==c);
+        return r1 || r2 || r3;
+    }
+};
