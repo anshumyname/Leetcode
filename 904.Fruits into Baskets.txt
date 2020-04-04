@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int totalFruit(vector<int>& tree) {
+        set<int> s;
+        int prev=0;
+        int maxlen=0;
+        for(int i=0;i<tree.size();i++){
+            
+            if(s.size()<2 || s.find(tree[i])!=s.end()){
+                s.insert(tree[i]);
+                maxlen=max(maxlen,i-prev+1);
+                continue;
+            }
+            
+            int k=i-1;
+            while(k>0 && tree[k]==tree[k-1])
+                k--;
+            prev=k;
+            s.erase(tree[k-1]);
+            s.insert(tree[i]);
+            //cout<<prev<<endl;
+        }
+        return maxlen;
+    }
+};
