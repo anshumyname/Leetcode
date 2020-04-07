@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int m,n;
+    vector<vector<int>> updateMatrix(vector<vector<int>>& matrix) {
+        m= matrix.size();
+        if(!m) return matrix;
+        n=matrix[0].size();
+        vector<vector<int>> v(m,vector<int> (n,0));
+        queue<pair<int,int>> q; 
+          vector<vector<int>> dir={{0,1},{1,0},{-1,0},{0,-1}};
+        for(int i=0;i<m;i++)
+            for(int j=0;j<n;j++)
+                if(!matrix[i][j])
+                    q.push({i,j});
+        while(!q.empty()){
+            int sz=q.size();
+            for(int i=0;i<sz;i++){
+                auto p= q.front(); q.pop();
+                int x=p.first;
+                int y=p.second;
+                
+              
+                for(auto d: dir){
+                    int nx=x+d[0]; int ny=y+d[1];
+                    if(valid(nx,ny) && matrix[nx][ny] && !v[nx][ny]){
+                        v[nx][ny]=true;
+                        matrix[nx][ny]=matrix[x][y]+1;
+                        q.push({nx,ny});
+                    }
+                }
+                
+            }
+        }
+        
+        return matrix;
+    }    
+    bool valid(int x,int y){
+        return (x>=0 && x<m) && (y>=0 && y<n);
+    }
+};

@@ -1,0 +1,66 @@
+class Solution {
+public:
+    int m,n;
+    queue<pair<int,int>> q;
+    int shortestBridge(vector<vector<int>>& A) {
+           m=A.size();
+        if(!m) return 0;
+        n=A[0].size();
+        bool found=false;
+        vector<vector<int>> v(m,vector<int> (n,0));
+        for(int i=0;i<m;i++){
+             if(found){
+                    break;
+                }
+            for(int j=0;j<n;j++)
+            {
+                if(A[i][j]==1){
+                    found=true;
+                    dfs(i,j,A,v);
+                    break;
+                }
+            }
+        }
+        vector<vector<int>> dir={{0,1},{1,0},{-1,0},{0,-1}};
+        int step=0;
+        while(!q.empty()){
+            int sz= q.size();
+            for(int i=0;i<sz;i++){
+                auto fr=q.front(); q.pop();
+                int x=fr.first;
+                int y=fr.second;
+                for(auto d: dir){
+                    int nx=x+d[0];
+                    int ny=y+d[1];
+                    if(valid(nx,ny) && !v[nx][ny]){
+                        if(A[nx][ny]==1)
+                            return step;
+                        q.push({nx,ny});
+                        v[nx][ny]=1;
+                    }
+                }
+                
+            }
+            step++;
+            
+        }
+        return -1;
+    }
+    
+    void dfs(int i,int j,vector<vector<int>>& A,vector<vector<int>>& v){
+        if(!valid(i,j)) return;
+        if(v[i][j] || !A[i][j]) return;
+        v[i][j]=1;
+        q.push({i,j});
+        vector<vector<int>> dir={{0,1},{1,0},{-1,0},{0,-1}};
+        for(auto d: dir){
+            dfs(i+d[0],j+d[1],A,v);
+        }
+        
+        
+    }
+    
+    bool valid(int x,int y){
+        return (x>=0 && x<m) && (y>=0 && y<n);
+    }
+};
