@@ -1,0 +1,45 @@
+class Solution {
+public:
+    unordered_map<int,vector<int>> gf;
+    vector<int> v;
+    int N;
+    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
+            if(n==1) return {0};
+            if(!n) return {};
+            for(auto e : edges){
+                gf[e[0]].push_back(e[1]);
+                gf[e[1]].push_back(e[0]);
+            }
+         vector<int> leaves;
+                for(auto it: gf){
+                    if(gf[it.first].size()==1){
+                        leaves.push_back(it.first);
+                    }
+                }
+                
+        
+            while(1){
+            
+                    if(n<=2) break;
+                    n-=leaves.size();
+                    
+                    vector<int> newl;       
+            
+                for(int i=0;i<leaves.size();i++){
+                    int erasew=gf[leaves[i]][0];
+                    gf[leaves[i]].erase(find(gf[leaves[i]].begin(),gf[leaves[i]].end(),erasew)); 
+                    gf[erasew].erase(find(gf[erasew].begin(),gf[erasew].end(),leaves[i]));
+                    if(gf[erasew].size()==1) newl.push_back(erasew);
+                }
+                
+                leaves=newl;
+            }
+        
+    
+        
+        return leaves;
+                        
+      }
+    
+ 
+};

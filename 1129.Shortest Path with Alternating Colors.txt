@@ -1,0 +1,43 @@
+class Solution {
+public:
+    
+    vector<vector<int>> gf;
+    vector<int> shortestAlternatingPaths(int n, vector<vector<int>>& red, vector<vector<int>>& blue) {
+        gf.resize(n);
+        vector<vector<vector<int>>> gfs(2,gf);
+        for(auto c: red){
+           // color[{c[0],c[1]}]=0;
+            gfs[0][c[0]].push_back(c[1]);
+        }
+        for(auto c: blue){
+            //color[{c[0],c[1]}]=1;
+            gfs[1][c[0]].push_back(c[1]);
+        }
+        vector<vector<int>> dist(n,vector<int> (2,n*2));
+        
+        dist[0]={0,0};
+        queue<vector<int>> q;
+        int color=-1;
+        q.push({0,0});
+        q.push({0,1});
+        
+        
+        while(!q.empty()){
+                auto fr= q.front(); q.pop();
+                int node=fr[0]; color=fr[1];
+                for(auto e: gfs[color][node]){
+                    if(dist[e][color^1]==n*2){
+                        dist[e][1^color]=dist[node][color]+1;
+                        q.push({e,1^color});
+                    }
+                }
+        }
+        vector<int> ans(n);
+            for(int i=0;i<n;i++){
+                int k=min(dist[i][0],dist[i][1]);
+                ans[i]=(k==n*2)?-1:k;
+            }
+            
+        return ans;
+    }
+};
