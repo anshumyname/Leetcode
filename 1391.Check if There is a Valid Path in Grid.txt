@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int m,n;
+    bool reached=false;
+    unordered_map<int,vector<vector<int>>> mp;
+    bool hasValidPath(vector<vector<int>>& matrix) {
+        m=matrix.size();
+        if(!m) return false;
+        n=matrix[0].size();
+        vector<vector<int>> v(m,vector<int> (n,0));
+        mp.insert({1,{{0,-1},{0,1}}});
+        mp.insert({2,{{1,0},{-1,0}}});
+        mp.insert({3,{{0,-1},{1,0}}});
+        mp.insert({4,{{0,1},{1,0}}});
+        mp.insert({5,{{0,-1},{-1,0}}});
+        mp.insert({6,{{0,1},{-1,0}}});
+      
+        if(m==1 && n==1) return true;
+        return dfs(0,0,matrix,v);
+    }
+    
+    bool dfs(int i,int j,vector<vector<int>>& grid,vector<vector<int>>& v){
+        
+        v[i][j]=1;
+        if(i==m-1 && j==n-1){return true;}
+        for(auto d: mp[grid[i][j]]){
+            int nx=i+d[0];
+            int ny=j+d[1];
+            vector<int> check={-d[0],-d[1]};
+            if(isvalid(nx,ny) && !v[nx][ny] && (mp[grid[nx][ny]][0]==check || mp[grid[nx][ny]][1]==check))
+                if(dfs(nx,ny,grid,v))
+                    return true;
+        }
+        return false;
+    }
+    
+    bool isvalid(int x,int y){
+        return (x>=0 && x<m) && (y>=0 && y<n);
+    }
+};
