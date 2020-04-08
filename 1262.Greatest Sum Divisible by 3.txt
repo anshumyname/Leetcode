@@ -1,0 +1,28 @@
+class Solution {
+public:
+    unordered_map<int,vector<int>>mp;
+    int maxSumDivThree(vector<int>& nums) {
+        int sum=0; 
+        for(auto x: nums){
+            mp[x%3].push_back(x);
+            sum+=x;
+        }
+        
+        
+        if(sum%3==0) return sum;
+        
+        int t=sum%3;
+        sort(mp[1].begin(),mp[1].end());
+        sort(mp[2].begin(),mp[2].end());
+         int tx=t^1^2;
+        if(mp[t].size() && mp[tx].size()>=2)
+            return sum-min(mp[t][0],mp[tx][0]+mp[tx][1]);
+       
+        if(!mp[t].size())
+            return sum-mp[tx][0]-mp[tx][1];
+        
+        return sum-mp[t][0];
+        
+    }
+    
+};
