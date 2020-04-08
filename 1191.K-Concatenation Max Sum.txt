@@ -1,0 +1,19 @@
+class Solution:
+   
+    def kConcatenationMaxSum(self, arr: List[int], k: int) -> int:
+        mod=10**9+7
+        k1= self.kad(arr)
+        k2=self. kad(arr*2)
+        if k<=1: return int(k1%mod)
+        return int(((k-2)*max(sum(arr),0)+k2)%mod)
+        
+    def kad(self,arr):
+        cur=0
+        mxsum=0
+        for e in arr:
+            cur=max(e,cur+e);
+            mxsum=max(cur,mxsum);
+        return mxsum
+            
+            
+        
