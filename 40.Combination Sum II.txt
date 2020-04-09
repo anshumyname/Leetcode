@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int flag=0;
+    vector<vector<int>> alle;
+    vector<vector<int>> combinationSum2(vector<int>& cand, int target,vector<int> v={},int sum=0,int st=-1) {
+        //cout<<sum<<" ";
+        if(!flag){
+            flag=1;
+            sort(cand.begin(),cand.end());
+        }
+        if(sum==target){
+            if(find(alle.begin(),alle.end(),v)==alle.end())
+                alle.push_back(v);
+        }
+        if(sum>target){
+            return {};
+        }
+        if(sum<=target){
+            for(int i=st+1;i<cand.size();i++){
+                v.push_back(cand[i]);
+                sum+=cand[i];
+                combinationSum2(cand,target,v,sum,i);
+                v.pop_back();
+                sum-=cand[i];
+            }
+        }
+        return alle;
+    }
+    
+    
+};
