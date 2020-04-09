@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<vector<int>> combine(int n, int k) {
+        if(k>n) return {};    
+        vector<vector<int>> vv;
+        vector<vector<int>> vx;
+        if(k==1 || k==n){
+           vector<int> t;
+            for(int i=1;i<=n;i++){
+                t.push_back(i);
+                vv.push_back({i});
+            }
+            if(k==n){ vv.clear(); vv.push_back(t);}
+            return vv;    
+        }
+        helper(n,k,vx);
+        
+        return vx;
+    }
+    
+    void helper(int n,int k,vector<vector<int>>& v){
+  
+        vector<vector<int>> next=combine(n-1,k-1);
+        vector<vector<int>> prev=combine(n-1,k);
+        for(int i=0;i<next.size();i++){
+            if(next[i].size()==k-1){
+                next[i].push_back(n);
+                v.push_back(next[i]);
+            }
+        }
+        ;
+        for(int i=0;i<prev.size();i++){
+            if(prev[i].size()==k){
+                v.push_back(prev[i]);
+            }
+        }
+        
+        
+    }
+};

@@ -1,0 +1,8 @@
+class Solution:
+    def mctFromLeafValues(self, A: List[int]) -> int:
+        cost=0
+        while(len(A)>1):
+            i=A.index(min(A))
+            cost+=(min(A[i-1:i]+A[i+1:i+2])*A.pop(i));
+        return int(cost)
+        
