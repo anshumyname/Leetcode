@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int deleteAndEarn(vector<int>& nums) {
+        cout<<nums.size();
+        if(!nums.size()) return 0;
+        if(nums.size()==1)
+            return nums[0];
+        vector<int> temp(10001,0);
+            for(auto t: nums)
+                temp[t]+=t;
+        int take=0,skip=0;
+        for(int i=0;i<temp.size();i++){
+            int taki=skip+temp[i];
+            int skipi=max(take,skip);
+            take=taki;
+            skip=skipi;
+        }
+        
+        return max(skip,take);
+    }
+};

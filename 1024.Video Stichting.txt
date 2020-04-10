@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int videoStitching(vector<vector<int>>& clips, int T) {
+        map<int,vector<int>> mp;
+        for(auto m:clips){
+            mp[m[0]].push_back(m[1]);
+        }
+        int start=0;
+        int prev=start;
+        int c=0;
+        map<int,vector<int>> :: iterator it=mp.begin();
+        while(1){
+            c++;
+            while(it!=mp.end() && it->first<=prev){
+                int xx=*max_element(it->second.begin(),it->second.end());
+                start=max(start,xx);
+                advance(it,1);       
+            }
+           
+            if(prev==start) return -1;
+            prev=start;
+            if(start>=T){
+                break;
+            }
+            
+            if(it==mp.end()) 
+                break;
+        }
+        
+        if(start<T) return -1;
+        return c;
+    }
+    
+    //int func(int n,int T)
+};

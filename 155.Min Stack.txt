@@ -1,0 +1,45 @@
+class MinStack {
+public:
+    /** initialize your data structure here. */
+    vector<pair<int,int>> mins;
+    int minele=INT_MAX;
+    vector<int> stack;
+    MinStack() {
+        
+    }
+    void push(int x) {
+        stack.push_back(x);
+        if(minele>x || (stack.size()==1 && x==INT_MAX)){
+            minele=x;
+            mins.push_back({stack.size(),x});
+        }
+      
+    }
+    
+    void pop() {
+        stack.pop_back();
+        if(stack.size()<mins[mins.size()-1].first){
+            mins.pop_back();
+            if(mins.size())
+                minele=mins[mins.size()-1].second;
+            else minele=INT_MAX;
+            }
+    }
+    
+    int top() {
+        return stack[stack.size()-1];
+    }
+    
+    int getMin() {
+       return  mins[mins.size()-1].second;
+    }
+};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack* obj = new MinStack();
+ * obj->push(x);
+ * obj->pop();
+ * int param_3 = obj->top();
+ * int param_4 = obj->getMin();
+ */
