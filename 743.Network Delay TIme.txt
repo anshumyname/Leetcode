@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int networkDelayTime(vector<vector<int>>& times, int N, int K) {
+        vector<vector<pair<int,int>>> gf(N+1);
+        for(auto k: times){
+            gf[k[0]].push_back({k[1],k[2]});
+        }
+        vector<int> vis(N+1,0);
+        vector<int> dist(N+1,INT_MAX);
+        dist[K]=0;
+        int time=0;
+        int nn=N;
+        while(nn--){
+            int nx= getmin(vis,dist,N);
+            vis[nx]=1;
+            for(auto nei: gf[nx]){
+                if(!vis[nei.first]  && dist[nei.first]>(nei.second+dist[nx])){
+                    dist[nei.first]=nei.second+dist[nx];
+                }
+            }
+            
+        }      
+        for(int i=1;i<=N;i++)
+            if(dist[i]==INT_MAX)
+                return -1;
+
+        return *max_element(dist.begin()+1,dist.end());
+    }
+    
+    int getmin(vector<int>& vis,vector<int>& dist,int N){
+        int mxi=0,mxe=dist[0];
+        for(int i=1;i<=N;i++){
+            if(dist[i]<mxe && !vis[i]){
+                mxi=i;
+                mxe=dist[i];
+            }
+        }
+        
+        return mxi;
+    }
+};
