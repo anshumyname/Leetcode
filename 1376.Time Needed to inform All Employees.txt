@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int numOfMinutes(int N, int headID, vector<int>& manager, vector<int>& informTime) {
+        if(N==1) return 0;
+        vector<vector<int>> gf(N);
+        int src=0;
+        for(int i=0;i<manager.size();i++){
+               if(manager[i]==-1){
+                src=i;
+                continue;
+            }
+            //gf[i].push_back({manager[i],0});
+            gf[manager[i]].push_back(i);
+        }
+        return getdfs(gf,informTime,headID);
+    }
+        
+    int getdfs(vector<vector<int>>& gf,vector<int>& IT,int node){
+        int t=0;
+        for(auto x: gf[node]){
+            t=max(t,getdfs(gf,IT,x));
+        }
+        
+        return IT[node]+t;
+    }
+    
+};
