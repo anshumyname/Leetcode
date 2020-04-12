@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int c=0;
+    int findTargetSumWays(vector<int>& nums, int S) {
+        calculate(nums,0,0,S);
+        return c;
+    }
+    
+    void calculate(vector<int>& nums,int i,int sum,int S){
+        if(i==nums.size()){
+            if(sum==S)
+                c++;
+        }
+        else{
+            calculate(nums,i+1,nums[i]+sum,S);
+            calculate(nums,i+1,-nums[i]+sum,S);
+        }
+        
+        
+    }
+};

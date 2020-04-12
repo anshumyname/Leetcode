@@ -1,0 +1,41 @@
+class Solution {
+public:
+    unordered_map<string,vector<string>> mp;
+    unordered_map<string,int> vis;
+    int n,flag=0;
+    vector<string> v;
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        for(int i=0;i<tickets.size();i++){
+            mp[tickets[i][0]].push_back(tickets[i][1]);   
+        }
+        
+       for(auto it=mp.begin(); it!=mp.end();it++)
+            sort(it->second.begin(),it->second.end());
+        
+       n=tickets.size();
+        
+        v.push_back("JFK");
+        dfs("JFK",0,v);
+        return v;
+        
+    }
+    void dfs(string start,int stop,vector<string> route){
+       // cout<<start<<" "<<stop<<endl;
+        if(stop==n && !flag){
+            v=route;
+            flag=1;
+            return;
+        }        
+        for(int i=0;i<mp[start].size();i++){
+            if(flag) continue;
+            string next=mp[start][i];
+            route.push_back(mp[start][i]);
+            stop++;
+            mp[start].erase(mp[start].begin()+i);
+            dfs(next,stop,route);
+            mp[start].insert(mp[start].begin()+i,next);
+            route.pop_back();
+            stop--;
+        }
+    }
+};
