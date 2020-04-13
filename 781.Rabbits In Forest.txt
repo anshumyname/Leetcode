@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int numRabbits(vector<int>& answers) {
+        unordered_map<int,int> mp;
+        int sum=0;
+        for(auto a: answers){
+            if(a==0){sum++; continue;}
+            if(mp.find(a)==mp.end()){
+                mp[a]=a;
+                sum+=(1+mp[a]);
+            }
+            else{
+                mp[a]--;
+                if(mp[a]==0)
+                    mp.erase(a);
+            }
+        }
+        return sum;
+    }
+};
