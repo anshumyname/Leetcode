@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<int> dp;
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        dp.resize(367,-1);
+        int n=days.size();
+        return recur(days[0],days[n-1],0,days,costs);   
+    }
+    
+    int recur(int curd,int targetd,int i,vector<int>& days,vector<int>& costs){
+         if(curd>targetd || i>=days.size()){
+             return 0;
+        }
+        if(dp[curd]!=-1)
+            return dp[curd];
+        int mn=3650000;
+        if(curd<days[i]){
+            curd=days[i];
+            dp[curd]=recur(curd,targetd,i,days,costs);
+            return dp[curd];
+        }
+        if(curd>days[i]){
+            while(curd>days[i])
+                i++;
+            dp[curd]=recur(curd,targetd,i,days,costs);
+            return dp[curd];
+        }
+        mn=min(mn,costs[0]+recur(curd+1,targetd,i+1,days,costs)); 
+        mn=min(mn,costs[1]+recur(curd+7,targetd,i+1,days,costs));
+        mn=min(mn,costs[2]+recur(curd+30,targetd,i+1,days,costs));
+        dp[curd]=mn;
+        return dp[curd];
+
+    }
+};

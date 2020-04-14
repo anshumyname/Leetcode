@@ -1,0 +1,34 @@
+class Solution {
+public:
+    vector<int> largestDivisibleSubset(vector<int>& nums) {
+        int n=nums.size();
+        if(!n) return {};
+        sort(nums.begin(),nums.end());
+        vector<int> dp(n,1);
+        for(int i=1;i<n;i++){
+            int mx=1;
+            int j=0;
+            while(j<i){
+                if(max(nums[i],nums[j])%min(nums[i],nums[j])==0){
+                    mx=max(dp[j]+1,mx);
+                }
+                j++;
+            }
+            dp[i]=mx;
+        }
+        int indi=max_element(dp.begin(),dp.end())-dp.begin();
+        int len=dp[indi];
+        cout<<len;
+        vector<int> d;
+        d.push_back(nums[indi]);
+        int x=indi;
+        while((len-1)>0){
+            int f=max_element(dp.begin(),dp.begin()+x)-dp.begin();
+            d.push_back(nums[f]);
+            len--;
+            x=f;
+        }
+        
+        return d;
+    }
+};
