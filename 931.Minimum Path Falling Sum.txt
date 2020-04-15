@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<vector<int>> dp;
+    int minFallingPathSum(vector<vector<int>>& A) {
+        dp.resize(A.size(),vector<int> (A.size(),101));
+        int ans=INT_MAX;
+        for(int i=0;i<A.size();i++)
+            ans=min(ans,recur(i,0,i,A));
+        return ans;
+    }
+    
+    int recur(int choice,int i,int j,vector<vector<int>>& A){
+        if(i==A.size())
+            return 0;
+        
+        if(dp[i][j]!=101)
+                    return dp[i][j];
+        int minval=INT_MAX;
+        for(int jj=0;jj<A.size();jj++){
+            if(abs(choice-jj)<=1){        
+                int xx=A[i][jj]+recur(jj,i+1,jj,A);
+                minval=min(minval,xx);
+            }
+        }
+        
+        dp[i][j]=minval;
+        return minval;
+    }
+};
