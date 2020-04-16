@@ -1,0 +1,44 @@
+class Solution {
+public:
+    vector<vector<int>> dp;
+    vector<pair<int,int>> count;
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        dp.resize(m+1,vector<int> (n+1,0));
+        count= getcount(strs);
+        return f(m,n);
+    }
+    
+    int f(int m,int n){
+        for(int x=0;x<count.size();x++){
+        auto k= count[x];
+        int zeros=k.first;
+        int ones=k.second;  
+        
+        for(int i=m;i>=zeros;i--){
+            for(int j=n;j>=ones;j--){
+                if(zeros<=i && ones<=j){
+                    dp[i][j]=max(dp[i][j],dp[i-zeros][j-ones]+1);
+                }
+                else
+                    dp[i][j]=dp[i][j];
+            }
+        }
+    }
+        return dp[m][n];
+    }
+    
+    vector<pair<int,int>> getcount(vector<string>& strs){
+        vector<pair<int,int>> g;
+        for(int curi=0;curi<strs.size();curi++){    
+            int zeros=0;
+            for(auto c: strs[curi])
+                if(c=='0')
+                    zeros++;
+            int ones=strs[curi].length()-zeros;
+            g.push_back({zeros,ones});
+        }
+        
+        return g;
+    }
+    
+};
