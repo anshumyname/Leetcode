@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<vector<int>> dp;
+    int minHeightShelves(vector<vector<int>>& books, int shelf_width) {
+        dp.resize(books.size(),vector<int> (1001,-1));
+        return helper(books,shelf_width,0,0,0);
+    }
+    
+    int helper(vector<vector<int>>& books,int allowed,int i,int curw,int h){
+        if(i>=books.size())
+            return h;
+        if(dp[i][curw]!=-1)
+            return dp[i][curw];
+        int res=min(h+helper(books,allowed,i+1,books[i][0],books[i][1]),
+                    (curw+books[i][0])>allowed?INT_MAX:helper(books,allowed,i+1,curw+books[i][0],max(h,books[i][1])));
+        dp[i][curw]=res;
+        return res;
+    }
+};

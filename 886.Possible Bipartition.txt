@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool cannot=true;
+    bool possibleBipartition(int N, vector<vector<int>>& dislikes) {
+        vector<int> group(N+1,-1);
+        vector<int> vis(N+1,0);
+        vector<vector<int>>  gf(N+1);
+        for(auto e: dislikes)
+            gf[e[0]].push_back(e[1]),gf[e[1]].push_back(e[0]);
+        
+       for(int i=1;i<=N;i++) 
+           if(!vis[i])
+               dfs(i,gf,vis,group,0);
+        return cannot;
+    }
+    
+    void dfs(int st,vector<vector<int>>& gf,vector<int>& vis,vector<int>& group,int clr){
+        vis[st]=1;
+        group[st]=clr;
+        for(auto nei: gf[st]){
+            if(vis[nei] && group[st]==group[nei]){
+                cannot=false;
+                break;
+            }
+            if(!vis[nei])
+                dfs(nei,gf,vis,group,clr^1);
+        }
+    }
+};
