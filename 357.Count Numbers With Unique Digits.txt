@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<int> dp;
+    int countNumbersWithUniqueDigits(int n) {
+        if(!n) return 1;
+        dp.resize(n+1,-1);
+        dp[1]=10;
+        return count(n);
+        
+    }
+    
+    int count(int n){
+        if(dp[n]!=-1)
+            return dp[n];
+        return 81*factor(n-2)+count(n-1);
+    }
+    
+    int factor(int x){
+        int k=8,ans=1;;
+        while(x--){
+            ans=ans*(k--);
+        }
+        return ans;
+    }
+    
+    
+};

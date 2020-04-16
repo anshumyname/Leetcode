@@ -1,0 +1,46 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    unordered_map<TreeNode*,pair<int,int>> mp;
+    int ans=0;
+    int longestZigZag(TreeNode* root,int dir=-1) {
+        getmax(root);
+        return ans-1;
+    }
+    
+    void getmax(TreeNode* root){
+        if(!root) return ;
+        int left=helper(root,0);
+        int right=helper(root,1);
+        ans=max(ans,max(left,right));
+        //cout<<left<<" "<<right<<endl;
+        getmax(root->left);
+        getmax(root->right);
+    }
+    
+    int helper(TreeNode* root,int dir){
+        if(!root) return 0;
+        if(mp.find(root)!=mp.end()){
+            if(dir==0 && mp[root].first!=0) return mp[root].first;
+            if(dir==1 && mp[root].second!=0) return mp[root].second;
+        }
+        int path=0;
+        if(dir==0){
+            path=1+helper(root->left,dir^1);
+            mp[root].first=path;
+            return path;
+        }                              
+        
+        path= 1+helper(root->right,dir^1);
+        mp[root].second=path;
+        return path;
+    }
+};
