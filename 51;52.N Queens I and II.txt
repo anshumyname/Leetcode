@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int N;
+    set<int> column;
+    set<int> diffs;
+    set<int> sums;
+    vector<vector<string>> ans;
+    vector<vector<string>> solveNQueens(int n) {
+        N=n;
+        string dots(n,'.');
+        vector<string> v(n,dots);
+        placed(n,v,0,true);
+        return ans;
+       
+    }
+    
+    void placed(int n,vector<string>& v,int i,bool flag=false){
+        if(i==n && flag==true){ 
+            ans.push_back(v);
+        }
+        for(int k=0;k<n;k++){
+            if(column.find(k)==column.end() && diffs.find(i-k)==diffs.end() && sums.find(i+k)==sums.end()){
+                column.insert(k);
+                diffs.insert(i-k);
+                sums.insert(i+k);
+                v[i][k]='Q';
+                placed(n,v,i+1,true) ;
+                column.erase(k);
+                diffs.erase(i-k);
+                sums.erase(i+k);
+                v[i][k]='.';
+            }
+            else
+                continue;
+        }
+    }
+};
