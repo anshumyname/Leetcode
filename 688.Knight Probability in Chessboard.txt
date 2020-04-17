@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int n;
+    vector<vector<vector<double>>> dp;
+    double knightProbability(int N, int K, int r, int c) {
+        dp.resize(K+1,vector<vector<double>> (N,vector<double> (N,-1)));
+        n=N;
+        vector<vector<int>> moves={{-2,+1},{-1,+2},{+1,+2},{+2,+1},{+1,-2},{+2,-1},{-2,-1},{-1,-2}};
+        return prob(K,r,c,moves);
+    }
+    
+    double prob(int hops,int x,int y,vector<vector<int>>& moves){
+        if(hops==0 && !valid(x,y))
+            return 0;
+        if(!hops) return 1;
+        if(dp[hops][x][y]!=-1)
+            return dp[hops][x][y];
+        double pro=0.0;
+        
+        for(auto dir: moves){
+            int nx=x+dir[0];
+            int ny=y+dir[1];
+            if(valid(nx,ny))
+                pro+=prob(hops-1,nx,ny,moves);
+        }
+        
+        dp[hops][x][y]=pro/8;
+        return dp[hops][x][y];
+        
+    }
+    
+    bool valid(int x,int y){
+        return (x>=0 && x<n) && (y>=0 && y<n);
+    }
+};

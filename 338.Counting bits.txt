@@ -1,0 +1,17 @@
+class Solution:
+    def countBits(self, num: int) -> List[int]:
+        lis=[0,1]
+        if num==0: return [0]
+        if num==1: return lis
+        def update(lis):
+            for i in range(len(lis)):
+                lis[i]=lis[i]+1
+            return lis
+        
+        while len(lis)<=num:
+            newlis=lis.copy()
+            update(newlis)
+            lis=lis+newlis
+        return lis[:num+1]
+            
+        

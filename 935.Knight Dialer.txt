@@ -1,0 +1,37 @@
+class Solution {
+public:
+    vector<vector<int>> dp;
+    int mod=1e9+7;
+    int knightDialer(int N) {
+        vector<vector<int>> gf(10);
+        gf[0]={4,6};
+        gf[1]={6,8};
+        gf[2]={7,9};
+        gf[3]={4,8};
+        gf[4]={3,9,0};
+        gf[5]={};
+        gf[6]={1,7,0};
+        gf[7]={2,6};
+        gf[8]={1,3};
+        gf[9]={2,4};
+        int sum=0;
+        dp.resize(10,vector<int> (N,-1));
+        for(int i=0;i<=9;i++)
+            sum=(sum%mod+calc(i,gf,N-1)%mod)%mod;
+        return sum;
+    }
+    
+    int calc(int st,vector<vector<int>>& gf,int n){
+        if(n==0)
+            return 1;
+        if(dp[st][n]!=-1)
+            return dp[st][n];
+        int summ=0;
+        for(auto k: gf[st])
+            summ=(summ%mod+calc(k,gf,n-1)%mod)%mod;
+        dp[st][n]=summ;
+        return dp[st][n];
+    }
+    
+    
+};

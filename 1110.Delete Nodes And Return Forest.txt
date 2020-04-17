@@ -1,0 +1,68 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<TreeNode*> v;
+    set<int> s;
+    TreeNode* nn;
+    vector<TreeNode*> delNodes(TreeNode* root, vector<int>& to_delete) {
+        for(auto e: to_delete)
+            s.insert(e);
+        nn=new TreeNode(-1);
+        v.push_back(root);
+        for(int i=0;i<v.size();i++){
+            traverse(v[i]);
+        }
+        vector<TreeNode*> newtrees;
+        for(int i=0;i<v.size();i++){
+            if(!v[i]->left && !v[i]->right && s.find(v[i]->val)!=s.end())
+                continue;
+            trim(v[i],i);
+            newtrees.push_back(v[i]);
+        }
+        
+        
+        return newtrees;
+    }
+    
+    void trim(TreeNode* root,int idx){
+        if(!root) return;
+        if(idx==-1 && s.find(root->val)!=s.end()){
+            v[idx]=nn->left;
+            return;
+        }
+        if(root->left)
+            if(s.find(root->left->val)!=s.end())
+                root->left=NULL;
+        if(root->right)
+            if(s.find(root->right->val)!=s.end())
+                root->right=NULL;
+        
+        trim(root->left,0);
+        trim(root->right,0);
+        
+    }
+    
+    void traverse(TreeNode* root){
+        if(!root) return;
+        if(s.find(root->val)!=s.end()){
+            if(root->left){
+                v.push_back(root->left);
+                root->left=NULL;
+            }
+            if(root->right){
+                v.push_back(root->right);
+                root->right=NULL;
+            }
+        }
+        traverse(root->left);
+        traverse(root->right);
+    }
+};
