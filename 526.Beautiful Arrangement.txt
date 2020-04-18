@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int cnt=0;
+    int countArrangement(int N) {
+        vector<int> v(N+1);
+        for(int i=1;i<=N;i++)
+            v[i]=i;
+        helper(v,N);
+        return cnt;
+    }
+    
+    void helper(vector<int>& v,int start){
+        if(start==0)
+        {
+            cnt++; return;
+        }
+        
+        for(int j=start;j>0;j--){
+            swap(v[start],v[j]);
+            if(v[start]%start==0 or start%v[start]==0)
+                helper(v,start-1);
+            swap(v[j],v[start]);
+        }
+    }
+};

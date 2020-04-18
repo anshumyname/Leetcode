@@ -1,0 +1,40 @@
+class CombinationIterator {
+public:
+    vector<string> v;
+    string s;
+    int len,i=0;
+    CombinationIterator(string characters, int combinationLength) {
+        s=characters;
+        len=combinationLength;
+        generate(s,len,0,"");
+    }
+    
+    string next() {
+        return v[i++];
+    }
+    
+    bool hasNext() {
+        return i<v.size();
+    }
+    
+    
+void generate(string& s,int len,int start,string t){
+    if(len==0){
+        v.push_back(t);
+        return;
+    }
+
+    for(int i=start;i<(s.length()-len+1);i++){
+        t+=s[i];
+        generate(s,len-1,i+1,t);
+        t.pop_back();
+    }
+}
+};
+
+/**
+ * Your CombinationIterator object will be instantiated and called as such:
+ * CombinationIterator* obj = new CombinationIterator(characters, combinationLength);
+ * string param_1 = obj->next();
+ * bool param_2 = obj->hasNext();
+ */
