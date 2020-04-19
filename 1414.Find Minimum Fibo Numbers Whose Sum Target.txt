@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<int> fibo;
+    
+    int findMinFibonacciNumbers(int k) {
+        generate(k);
+        auto it= find(fibo.begin(),fibo.end(),k);
+        if(it!=fibo.end()) return 1;
+        int c=0,rem=k;
+        while(rem){
+            int x=upper_bound(fibo.begin(),fibo.end(),rem)-fibo.begin();
+            if(x==fibo.size())
+                x=fibo.size()-1;
+            else
+                x-=1;
+            
+            rem-=fibo[x];
+            c++;
+        }
+        return c;
+    }
+    
+    void generate(int n){
+        int a=1;
+        int b=1;
+        int c;
+        fibo={1,1};
+        while((a+b)<=n){
+            c=a+b;
+            fibo.push_back(c);
+            a=b;
+            b=c;
+        }
+    }
+};

@@ -1,0 +1,31 @@
+class Solution {
+public:
+    unordered_map<char,vector<char>> mp;
+    vector<string> ans;
+    string getHappyString(int n, int k) {
+        mp['a']={'b','c'};
+        mp['b']={'a','c'};
+        mp['c']={'a','b'};
+        calc("a",n,'a');
+        calc("b",n,'b');
+        calc("c",n,'c');
+        return k<=ans.size()?ans[k-1]:"";
+    }
+    
+    void calc(string t,int n,char start){
+        if(n==1){
+            ans.push_back(t);
+            return;
+        }
+        //t+=start;
+        for(auto it: mp[start]){
+            t+=it;
+            calc(t,n-1,it);
+            t.pop_back();
+        }
+        //t.pop_back();
+        
+    }
+    
+    
+};

@@ -1,0 +1,51 @@
+class Solution {
+public:
+    unordered_map<int,int> hashi;
+    unordered_map<int,int> ihash;
+    unordered_map<string,int> hashj;
+    set<int> tables;
+    map<string,vector<int>> dishcount;
+    
+    vector<vector<string>> displayTable(vector<vector<string>>& orders) {
+        for(auto x: orders){
+            tables.insert(stoi(x[1]));
+            dishcount[x[2]].push_back(stoi(x[1]));
+        }
+        int k=0;
+        for(auto ele: tables){
+            hashi[ele]=k;
+            ihash[k++]=ele;
+        }
+        k=0;
+        for(auto d: dishcount){
+            hashj[d.first]=k++;
+        }
+        
+        vector<vector<int>> matrix(tables.size(),vector<int> (dishcount.size(),0));
+        vector<string> dishes={"Table"};
+        for(auto it: dishcount){
+            int j= hashj[it.first];
+            dishes.push_back(it.first);
+            for(auto x : it.second){
+                int i=hashi[x];
+                matrix[i][j]++;
+            }
+        }
+        
+        vector<vector<string>> ans;
+        ans.push_back(dishes);
+        for(int i=0;i<tables.size();i++){
+            vector<string> tobe;
+            int tb=ihash[i];
+            tobe.push_back(to_string(tb));
+            for(int j=0;j<dishcount.size();j++){
+                tobe.push_back(to_string(matrix[i][j]));
+            }
+            ans.push_back(tobe);
+        }
+        
+            
+        return ans;
+        
+    }
+};
