@@ -1,0 +1,45 @@
+class Solution {
+public:
+    vector<vector<int>> gmp;
+    vector<bool> canMakePaliQueries(string s, vector<vector<int>>& queries) {
+        vector<bool> v;
+        gmp.resize(26,vector<int> (s.length()+1,0));
+        int i=0;
+        
+        for(int i=0;i<s.length();i++)
+            gmp[s[i]-'a'][i+1]++;
+        
+       
+        
+        
+         for(int i=0;i<26;i++){
+             for(int j=1;j<=s.length();j++)
+                 gmp[i][j]=gmp[i][j-1]+gmp[i][j];
+        }
+        
+         vector<int>  mp;
+        for(int i=0;i<queries.size();i++){
+           
+            for(int j=0;j<26;j++){
+                int b=gmp[j][queries[i][1]+1];
+                int a=gmp[j][queries[i][0]];
+                mp.push_back(b-a);
+            }
+            v.push_back(ispossible(mp,queries[i][2]));
+            mp.clear();
+        }
+                        
+        return v;
+    }
+    
+    bool ispossible(vector<int>& mp,int k){
+        
+        int odds=0;
+        for(auto it: mp)
+            if(it%2==1)
+                odds++;
+        
+        if(odds==1) return true;
+        return (odds/2)<=k;
+    }
+};

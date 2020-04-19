@@ -1,0 +1,44 @@
+class Solution {
+public:
+    string strWithout3a3b(int A, int B) {   
+        string as;
+        char a='a';
+        char b='b';
+        if(A<B)
+        {
+            swap(A,B);
+            swap(a,b);
+        }
+        while(1){
+            if(B>=A){
+                while(A or B){
+                    if(B){ as+=b; B--;}
+                    if(A){ as+=a; A--;}
+                }
+                break;
+            }
+            if(A>=2 && B>=1){
+            as+=a;
+            as+=a;
+                as+=b;
+                A-=2;
+                B--;
+          }
+            else if(A>=2 && !B){
+                as+=a;
+                as+=a;
+                A-=2;
+            }
+            else if(A==1){
+                as+=a;
+                A--;
+            }
+            else{
+                break;
+            }
+            
+        }     
+        return as;
+        
+    }
+};
