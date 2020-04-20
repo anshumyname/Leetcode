@@ -1,0 +1,46 @@
+class Solution {
+public:
+    string pushDominoes(string dominoes) {
+        int idx=-1;
+        for(int i=0;i<dominoes.size();i++){
+            if(dominoes[i]!='.')
+            {
+                if(idx<0){
+                    idx=i;
+                    if(dominoes[idx]=='L') modify(dominoes,0,idx,1,'L');
+                    continue;
+                }
+                if(dominoes[i]==dominoes[idx])
+                    modify(dominoes,idx,i,1,dominoes[idx]);
+                if(dominoes[i]=='L' && dominoes[idx]=='R')
+                    modify(dominoes,idx,i,2);
+                idx=i;
+                continue;
+            }
+        }
+        if(idx<0) return dominoes;
+        if(dominoes[idx]=='R')
+            modify(dominoes,idx,dominoes.length()-1,1,'R');
+        
+      
+        return dominoes;    
+        
+    }
+    
+    void modify(string& domi,int st,int end,int type,char x='0'){
+        if(type==1){
+            if(st>=domi.length() or end<0) return;
+            for(int i=st;i<=end;i++)
+                domi[i]=x;
+                
+        }
+        else{
+            int left=st;
+            int right=end;
+            while(left<right){
+                domi[left++]='R';
+                domi[right--]='L';
+            }
+        }
+    }
+};

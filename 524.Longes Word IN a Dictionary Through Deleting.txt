@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool static comp(string x,string y){
+        if(x.length()==y.length())
+            return x<y;
+        return x.length()>y.length();
+    }
+    string findLongestWord(string s, vector<string>& d) {
+        vector<string> matched;
+        for(auto str: d){
+            int idx=0;
+            for(int i=0;i<s.length();i++){
+                if(s[i]==str[idx])
+                    idx++;
+            }
+            if(idx==str.length())
+                matched.push_back(str);
+        }   
+        
+        sort(matched.begin(),matched.end(),comp);
+        return matched.size()?matched[0]:"";
+    }
+};
