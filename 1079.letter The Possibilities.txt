@@ -1,0 +1,36 @@
+class Solution {
+public:
+    unordered_set<string> posi;
+    unordered_set<string> gen;
+    int numTilePossibilities(string tiles) {
+        sort(tiles.begin(),tiles.end());
+        generate(tiles);
+        for(auto s: gen){
+            permutate(s);
+        }
+        return posi.size();
+    }
+    
+    
+    void permutate(string s){
+        
+        do{
+            posi.insert(s);
+        }while(next_permutation(s.begin(),s.end()));
+    } 
+    
+    void generate(string s){
+        int h=s.length();
+        int powsize=pow(2,h);
+        int c,j;
+        for(c=1;c<powsize;c++){
+            string x;
+            for(j=0;j<h;j++){
+                if(c&(1<<j))
+                    x+=s[j];
+            }
+            gen.insert(x);
+        }
+    }
+    
+};

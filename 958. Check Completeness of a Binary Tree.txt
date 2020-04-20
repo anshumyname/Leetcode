@@ -1,0 +1,60 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isCompleteTree(TreeNode* root) {
+        int h= ht(root);
+        queue<TreeNode*> q;
+        if(!root) return true;
+        if(!root->left and !root->right) return true;
+        int lev=0;
+        vector<TreeNode*> hth;
+        q.push(root);
+        while(!q.empty()){
+            int sz=q.size();
+            lev++;
+            if(lev<h && sz<(pow(2,lev-1)))
+                return false;
+            while(sz--){
+                //cout<<lev<<endl;
+                auto fr=q.front(); q.pop();
+                if(lev==(h-1)){
+                   // cout<<"entered";
+                    hth.push_back(fr->left);
+                    hth.push_back(fr->right);
+                }
+                
+                if(fr->left) q.push(fr->left);
+                if(fr->right) q.push(fr->right);
+            }
+            
+        }
+        
+        int flag=0;
+        for(int i=0;i<hth.size();i++){
+            if(hth[i]==NULL)
+                flag=1; 
+            if(flag && hth[i]!=NULL)
+                return false;
+        }
+                
+        
+        return true;
+        
+        
+    }
+    
+    int ht(TreeNode* root){
+        if(!root) return 0;
+        int l= ht(root->left);
+        int r= ht(root->right);
+        return max(l,r)+1;
+    }
+};
