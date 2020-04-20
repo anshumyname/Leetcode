@@ -1,0 +1,26 @@
+class Solution {
+public:
+    
+    int minNumberOfFrogs(string s) {
+        vector<int> cnt(5);
+        int maxfr=0,frog=0;
+        for(auto c: s){
+            string cr="croak";
+            int x=find(cr.begin(),cr.end(),c)-cr.begin();
+            cnt[x]++;
+            if(!x){
+                maxfr=max(maxfr,++frog);
+            }
+            else if(x==4)
+                frog--;
+            else{
+                --cnt[x-1];
+                if(cnt[x-1]<0)
+                    return -1;
+            }
+        }
+        
+        
+        return frog==0?maxfr:-1;
+    }
+};

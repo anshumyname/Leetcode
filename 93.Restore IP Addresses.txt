@@ -1,0 +1,19 @@
+class Solution:
+    def restoreIpAddresses(self, s: str) -> List[str]:
+        todo=[]
+        for a in range(1,4):
+            for b in range(1,4):
+                for c in range(1,4):
+                    for d in range(1,4):
+                        if (a+b+c+d)==len(s):
+                            x=int(s[:a])
+                            y=int(s[a:a+b])
+                            z=int(s[a+b:a+b+c])
+                            dz=int(s[a+b+c:])
+                            
+                            if int(x)<=255 and int(y)<=255 and int(z)<=255 and int(dz)<=255:
+                                ans=(str(x)+"."+str(y)+"."+str(z)+"."+str(dz))
+                                if len(ans)==(len(s)+3):
+                                    todo.append(ans)
+        return todo
+        

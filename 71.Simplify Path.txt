@@ -1,0 +1,21 @@
+class Solution:
+    def simplifyPath(self, path: str) -> str:
+        #path=path[-1]
+        sp= path.split("/");
+        newpath=""
+        for p in sp:
+            if p=="" or p==".": continue
+            if p=="..":
+                l=len(newpath)-1
+                while l>0 and newpath[l]!='/':
+                    newpath=newpath[:-1]
+                    l-=1;
+                    
+                if len(newpath)>0: newpath=newpath[:-1]
+                continue
+            newpath=newpath+"/"+p
+        
+        if len(newpath)==0: return "/"
+        return newpath
+                
+        
