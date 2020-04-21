@@ -1,0 +1,29 @@
+class Solution {
+public:
+    unordered_map<int,int> mp;
+    bool isPossibleDivide(vector<int>& nums, int k) {
+          if(nums.size()%k) return false;
+        
+        for(auto i: nums)
+            mp[i]++;
+        
+        while(1){
+            int x=getmin();
+            if(x==INT_MAX) return true;
+            for(int i=x;i<=(x+k-1);i++){
+                if(mp[i]<=0) return false;
+                mp[i]--;
+            }    
+        }
+        
+        return true;
+    }
+    
+    int getmin(){
+        int ans=INT_MAX;
+        for(auto it: mp)
+            if(it.second>0 && it.first<ans)
+                ans=it.first;
+        return ans;
+    }
+};
