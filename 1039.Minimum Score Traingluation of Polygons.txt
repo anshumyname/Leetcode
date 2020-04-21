@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int flag=1;
+    vector<vector<int>> dp;
+    int minScoreTriangulation(vector<int>& A,int i=0,int j=0,int res=0) {
+        if(!j) j=A.size()-1;
+        if(flag) ff();
+        if(dp[i][j]!=-1) return dp[i][j];
+        for(auto k=i+1;k<j;k++){
+            res=min(res==0?INT_MAX:res,minScoreTriangulation(A,i,k)+A[i]*A[k]*A[j]+minScoreTriangulation(A,k,j));
+        }
+    
+        
+        return dp[i][j]=res;
+    }
+    
+    void ff(){
+        flag=0;
+        dp.resize(50,vector<int> (50,-1));
+    }
+};

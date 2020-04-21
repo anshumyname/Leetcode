@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<vector<pair<int,int>>> dp;
+    bool PredictTheWinner(vector<int>& nums) {
+        dp.resize(nums.size(),vector<pair<int,int>> (nums.size(),{0,0}));
+        for(int len=1;len<=nums.size();len++){
+            for(int i=0;i<nums.size()-len+1;i++){
+                int j=i+len-1;
+                if(1==len){
+                    dp[i][i]={nums[i],0};
+                    continue;
+                }
+                auto x=nums[i]+dp[i+1][j].second;
+                auto y=nums[j]+dp[i][j-1].second;
+                dp[i][j].first=max(x,y);
+                if(x>y){
+                    dp[i][j].second=dp[i+1][j].first;
+                }
+                else
+                    dp[i][j].second=dp[i][j-1].first;
+            }
+        }
+        return dp[0][nums.size()-1].first>=dp[0][nums.size()-1].second;
+    }
+};
