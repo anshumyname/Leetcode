@@ -1,0 +1,50 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* removeLeafNodes(TreeNode* root, int target) {
+        while(check(root,target)){
+            if(!root->left && !root->right && root->val==target)
+                return NULL;
+            prune(root,target);
+        }
+        return root;
+        
+    }
+    
+    void print(TreeNode* root){
+        if(!root) return;
+        print(root->left);
+        cout<<root->val<<" ";
+        print(root->right);
+    }
+    
+    void prune(TreeNode* root,int tar){
+        if(!root) return;
+        if(root->left && root->left->val==tar && (!root->left->left) && !root->left->right)
+            root->left=NULL;
+        if(root->right && root->right->val==tar && (!root->right->left) && !root->right->right)
+            root->right=NULL;
+        
+        prune(root->left,tar);
+        prune(root->right,tar);
+    }
+    
+    bool check(TreeNode* root,int tar){
+        if(!root) return false;
+        if(!root->left && !root->right && root->val==tar)
+            return true;
+        
+        bool left= check(root->left,tar);
+        bool right= check(root->right,tar);
+        return left or right;
+            
+    }
+};
