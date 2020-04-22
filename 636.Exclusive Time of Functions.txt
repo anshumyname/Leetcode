@@ -1,0 +1,26 @@
+class Solution:
+    def exclusiveTime(self, n: int, logs: List[str]) -> List[int]:
+        stack=[]
+        ans=[0]*n
+        vis=set()
+        for f in logs:
+            spl= f.split(":")
+            ids=int(spl[0]); time=int(spl[2]);
+            if spl[1]=="start":
+                stack.append([ids,time])
+            else:
+                stid,prevtime= stack.pop()
+                ans[stid]+=(time-prevtime+1)
+                
+                if len(stack)!=0:
+                    x= stack.pop()
+                    ans[x[0]]-=(time-prevtime+1)
+                    stack.append(x)
+        
+        return ans
+    
+                
+                
+                
+            
+        

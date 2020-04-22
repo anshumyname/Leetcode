@@ -1,0 +1,11 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& prices, int fee) {
+        int cash=0,hold=-prices[0];
+        for(auto st: prices){
+            cash=max(cash,hold+st-fee);
+            hold=max(hold,cash-st);
+        }
+        return cash;
+    }
+};

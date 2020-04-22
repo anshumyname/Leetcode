@@ -1,0 +1,29 @@
+class Solution {
+public:
+    unordered_map<int,vector<int>> mp;
+    vector<int> gardenNoAdj(int N, vector<vector<int>>& paths) {
+        vector<int> v(N,0);
+        for(auto p: paths){
+            mp[p[0]-1].push_back(p[1]-1);
+            mp[p[1]-1].push_back(p[0]-1);
+        }
+    
+        for(int i=0;i<N;i++){
+            dfs(i,v);
+        }
+        
+        return v;    
+    }
+    
+    void dfs(int st,vector<int>& v){
+        vector<int> colors(5,0);
+       
+        for(auto s: mp[st])
+            colors[v[s]]=1;
+        
+        for(int c=4;c>0;c--)
+            if(colors[c]!=1)
+                v[st]=c;
+        
+    }
+};
