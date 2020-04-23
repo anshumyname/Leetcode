@@ -1,0 +1,52 @@
+class Solution {
+public:
+    int m,n;
+    vector<vector<int>> spiralMatrixIII(int R, int C, int r0, int c0) {
+        m=R,n=C;
+       int x=r0,y=c0;
+        int lev=1;
+        int rd=1;
+        vector<vector<int>> v;
+        v.push_back({r0,c0});
+        while(1){
+            if(v.size()==(R*C))
+                break;
+           
+           // cout<<endl;
+            
+            if(rd){
+                for(int i=0;i<lev;i++){
+                    y++;
+                    if(valid(x,y))
+                        v.push_back({x,y});
+                }
+                for(int i=0;i<lev;i++){
+                    x++;
+                    if(valid(x,y))
+                        v.push_back({x,y});
+                }
+            }
+            else{
+                for(int i=0;i<lev;i++){
+                    y--;
+                    if(valid(x,y))
+                        v.push_back({x,y});
+                }
+                for(int i=0;i<lev;i++){
+                    x--;
+                   if(valid(x,y))
+                        v.push_back({x,y});
+                }
+                
+            }
+            lev++;
+            rd=rd^1;
+        }
+        return v;
+    }
+    
+    bool valid(int x,int y){
+        return (x>=0 && x<m) && (y>=0 && y<n);
+        
+    }
+};
