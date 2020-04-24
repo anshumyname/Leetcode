@@ -1,0 +1,50 @@
+class Solution {
+public:
+    
+    vector<vector<pair<int,int>>> gf;
+    int findTheCity(int n, vector<vector<int>>& edges, int diT) {
+        gf.resize(n);
+        for(auto e: edges){
+            gf[e[0]].push_back({e[2],e[1]});
+            gf[e[1]].push_back({e[2],e[0]});
+        }
+        int maxi=n+1;
+        int mi=n;
+        for(int i=n-1;i>=0;i--){
+            auto d=dkstra(gf,i,n);
+            int c=0;
+            for(int x=0;x<n;x++){
+                if(diT>=d[x])
+                    c++;
+            }
+            if(c<maxi){
+                maxi=c;
+                mi=i;
+            }
+        }
+        return mi;
+    }
+    
+    vector<int> dkstra(vector<vector<pair<int,int>>> gf,int st,int n){
+       // vector<int> vis(n,0);
+        vector<int> dist(n,INT_MAX);
+        dist[st]=0;
+        //vis[st]=1;
+        priority_queue<pair<int,int> ,vector<pair<int,int>> ,greater<pair<int,int>>> pq;
+        pq.push({0,st});
+        while(!pq.empty()){
+            auto fr=pq.top(); pq.pop();
+            
+            for(auto nei: gf[fr.second]){
+                int w=nei.first;
+                int v=nei.second;
+                if(dist[v]>(fr.first+w)){
+                    dist[v]=fr.first+w;
+                    pq.push({dist[v],v});
+                }
+            }
+        }
+        
+        return dist;
+    }
+};

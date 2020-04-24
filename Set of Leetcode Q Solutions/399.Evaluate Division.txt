@@ -1,0 +1,49 @@
+class Solution {
+public:
+    map<pair<string,string>,double> eval;
+    unordered_map<string,vector<string>> gf;
+    set<string> s;
+    vector<double> calcEquation(vector<vector<string>>& eq, vector<double>& values, vector<vector<string>>& queries) {
+        for(int i=0;i<eq.size();i++){
+            string x= eq[i][0];
+            string y=eq[i][1];
+            eval[{x,y}]=values[i];
+            eval[{y,x}]=(values[i]!=0.00)?1/values[i]:-1;
+            gf[x].push_back(y);
+            gf[y].push_back(x);
+            s.insert(x);
+            s.insert(y);
+        }
+        vector<double> ans;
+        for(auto q: queries){
+            string x= q[0];
+            string y= q[1];
+            if(s.find(x)==s.end() or s.find(y)==s.end()){
+                ans.push_back(-1.00000);
+                continue;
+            }
+            unordered_map<string,int> v;
+            auto an= dfs(x,y,v);
+            ans.push_back(an);
+            
+        }
+        return ans;
+    }
+    
+    double dfs(string st,string end,unordered_map<string,int>& vis){
+        if(eval[{st,end}]!=0.00)
+            return eval[{st,end}];
+        vis[st]=1;
+        for(auto nei: gf[st]){
+            if(!vis[nei]){
+                double xx=eval[{st,nei}]*dfs(nei,end,vis);
+                if(xx>=0)
+                    return xx;
+            }
+                
+        }
+        
+        return -1.000;
+        
+    }
+};
