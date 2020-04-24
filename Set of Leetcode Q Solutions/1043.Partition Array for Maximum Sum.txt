@@ -1,0 +1,22 @@
+class Solution {
+public:
+    
+    int maxSumAfterPartitioning(vector<int>& A, int k) {
+       //if(k==1) return A.size()*(*max_element(A.begin(),A.end()));
+        
+        int n=A.size();
+        vector<int> dp(n);
+        for(int i=0;i<n;i++){
+            int curmax=A[i];
+            for(int j=1;j<=k && i-j+1>=0; j++){
+                curmax=max(A[i-j+1],curmax);
+                dp[i]=max(dp[i],(i>=j?dp[i-j]:0)+curmax*j);
+            }
+        }
+        
+        return dp[n-1];
+        
+    }
+    
+    
+};
