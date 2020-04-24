@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<int> v;
+    bool equationsPossible(vector<string>& equations) {
+        v.resize(27);
+        for(int i=0;i<26;i++)
+            v[i]=i;
+        auto later=equations;
+        later.clear();
+        for(int i=0;i<equations.size();i++){
+            if(equations[i][1]=='!')
+                later.push_back(equations[i]);
+            else{
+                int id1=equations[i][0]-'a';
+                int id2=equations[i][3]-'a';
+                if(id1==id2) continue;
+                int x=find(id1);
+                int y=find(id2);
+                if(x==y) continue;
+                v[x]=y;
+            }
+        }
+        
+        for(int i=0;i<later.size();i++){
+            int id1=later[i][0]-'a';
+                int id2=later[i][3]-'a';
+                if(id1==id2) return false;
+                int x=find(id1);
+                int y=find(id2);
+                if(x==y) return false;
+        }
+        return true;
+    }
+    
+    int find(int i){
+        if(v[i]==i)
+            return i;
+        return find(v[i]);
+    }
+};

@@ -1,0 +1,23 @@
+class Solution:
+    def maxRotateFunction(self, A: List[int]) -> int:
+        if len(A)==0:
+            return 0;
+        f0=0
+        summ=0
+        for i in range(len(A)):
+            f0+=(i*A[i])
+            summ+=A[i]
+        
+        maxi=f0
+        n=len(A)
+        for i in range(len(A)-1):
+            fn=f0+summ-(n)*A[n-i-1]
+            maxi=max(maxi,fn)
+            f0=fn
+
+        return maxi
+        
+        
+        
+        
+        
