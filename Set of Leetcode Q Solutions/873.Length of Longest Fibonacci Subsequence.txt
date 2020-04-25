@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int lenLongestFibSubseq(vector<int>& A) {
+        int n=A.size(),mxe=0;
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                int prev=j,k=j,c=0;
+                int T=A[i]+A[j];
+                while(1){
+                    if(k>=n)break;
+                    int idx=bs(k,A,T);
+                    if(idx==-1) break;
+                    T= A[k]+A[idx];
+                    c++;
+                    prev=k;
+                    k=idx;
+                }
+                 mxe=max(mxe,c+2);                
+            }
+        }
+        return mxe==2?0:mxe;
+    }
+    
+    int bs(int st,vector<int>& nums,int tar){
+        int l=st;
+        int r=nums.size()-1;
+        while(l<=r){
+            int mid=l+(r-l)/2;
+            if(nums[mid]==tar)
+                return mid;
+            if(nums[mid]<tar)
+                l=mid+1;
+            else
+                r=mid-1;
+            
+        }
+        return -1;
+    }
+    
+};
