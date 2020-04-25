@@ -1,0 +1,54 @@
+class Solution {
+public:
+    unordered_map<int,int> mp;
+    vector<int> splitIntoFibonacci(string S) {
+        int n=S.length();
+        int size=min(10,n);
+        string fir;
+        int range=pow(2,31)-1;
+        string sec;
+        for(int i=0;i<size;i++){
+            fir+=S[i];
+            long long f=stol(fir);
+            if(fir[0]=='0'){
+                if(!f && fir.length()>1) return {};
+                if(f) return {};
+            }
+            for(int j=i+1;j<size;j++){
+                sec+=S[j];
+                long long s= stol(sec);
+                if(sec[0]=='0'){
+                if(!s && sec.length()>1) break;
+                if(s) break;
+            }
+                vector<long long> fib={f,s};
+                //cout<<f<<" || "<<s<<endl;
+                int k=j+1;
+                while(k<n){
+                    int sz=fib.size();
+                    long long nxt=fib[sz-1]+fib[sz-2];
+                    string check=to_string(nxt);
+                    string ss=S.substr(k,check.length());
+                    //cout<<check<<" "<<ss<<endl;
+                    if (nxt<=range && ss==check){
+                        k+=check.length();
+                        fib.push_back(nxt);
+                    }
+                    else
+                        break;
+                }
+                
+                if(fib.size()>=3 && k==n){
+                    vector<int> fit(fib.begin(),fib.end());
+                    return fit;
+                }
+                
+            }
+            
+            sec="";
+        }
+        return {};
+    }
+    
+    
+};
