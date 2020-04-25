@@ -1,0 +1,10 @@
+class Solution {
+public:
+    int numTimesAllBlue(vector<int>& light) {
+        int n=light.size(),mxele=light[0],c=0;
+        for(int i=0;i<n;i++){
+            mxele=max(light[i],mxele);
+            if(mxele==(i+1)) c++;  }
+        return c;
+    }
+};

@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int maxSumTwoNoOverlap(vector<int>& A, int L, int M) {
+        int n=A.size();
+        vector<int> accum(n+1,0);
+        for(int i=1;i<=n;i++)
+            accum[i]=accum[i-1]+ A[i-1];
+        int ans=0;
+        for(int i=0;i<n-L-M+1;i++){
+            int lsum=accum[i+L]-accum[i];
+            int rsum=accum[i+M]-accum[i];
+            auto x=circulate(i+L,A,M,accum);
+            auto y=circulate(i+M,A,L,accum);
+            ans=max(lsum+x,ans);
+            ans=max(rsum+y,ans);
+        }
+        
+        return ans;
+    }
+    
+    int circulate(int st,vector<int>& A,int len,vector<int>& acc){
+        int n=A.size();
+        int sum=0;
+        for(int i=st;i<n-len+1;i++){
+            sum=max(sum,acc[i+len]-acc[i]);
+        }
+        return sum;
+    }
+};
