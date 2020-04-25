@@ -1,0 +1,77 @@
+class Solution {
+public:
+    pair<string,string> padding(string s1,string s2){
+        int diff=s1.length()-s2.length();
+        string zeros(abs(diff),'0');
+        s1= (diff>0?"":zeros)+s1;
+        s2= (diff>0?zeros:"")+s2;
+        return {s1,s2};
+    }
+    
+    string addition(string answer,string toadd){
+    if(answer=="")
+        return toadd;
+        auto p=padding(answer,toadd);
+        answer=p.first; toadd=p.second;
+       // cout<<answer<<" "<<toadd<<endl;
+        int i=0,carry=0,l=toadd.length();
+        string added;
+        for(int x=l-1;x>=0;x--){
+            int sum=carry+(answer[x]-'0')+(toadd[x]-'0');
+            carry=sum/10;
+            added.insert(0,to_string(sum%10));
+        }
+        if(carry)
+            added.insert(0,to_string(carry));
+        int k=0;
+        while(added[k]=='0')
+            k++;
+        added.erase(0,k);
+        //cout<<s;
+        return added;
+    }
+    bool isAdditiveNumber(string S) {
+         int n=S.length();
+        int size=n;
+        string fir;
+        int range=pow(2,31)-1;
+        string sec;
+        for(int i=0;i<size;i++){
+            fir+=S[i];
+            //long long f=stol(fir);
+            if(fir[0]=='0' && fir.length()>1){
+                return false;
+            }
+            for(int j=i+1;j<size;j++){
+                sec+=S[j];
+                //long long s= stol(sec);
+                if(sec[0]=='0' && sec.length()>1)
+                    break;
+                vector<string> fib={fir,sec};
+                //cout<<f<<" || "<<s<<endl;
+                int k=j+1;
+                while(k<n){
+                    int sz=fib.size();
+                    string nxt=addition(fib[sz-1],fib[sz-2]);
+                    //string check=to_string(nxt);
+                    string ss=S.substr(k,nxt.length());
+                    //cout<<check<<" "<<ss<<endl;
+                    if (ss==nxt){
+                        k+=ss.length();
+                        fib.push_back(nxt);
+                    }
+                    else
+                        break;
+                }
+                
+                if(fib.size()>=3 && k==n){
+                    return true;
+                }
+                
+            }
+            
+            sec="";
+        }
+        return false;
+    }
+};
