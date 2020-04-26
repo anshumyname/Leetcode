@@ -1,0 +1,68 @@
+class Solution {
+public:
+    vector<string> spellchecker(vector<string>& wordlist, vector<string>& queries) {
+        vector<string> ans;
+        int n=wordlist.size();
+        unordered_map<string,int> lwd;
+        unordered_map<string,int> mp;
+        unordered_map<string,int> vow;
+        for(int i=n-1;i>=0;i--){
+            mp[wordlist[i]]++;
+            string lc=getlow(wordlist[i]);
+            lwd[lc]=i;
+            vow[unvowel(lc)]=i;
+        }
+        
+        for(auto q: queries){
+             bool x= mp.find(q)!=mp.end();
+            if(x){
+                ans.push_back(q);
+                continue;
+            }
+            q=getlow(q);
+            bool capital=false;
+            if(lwd.find(q)!=lwd.end()){
+                ans.push_back(wordlist[lwd[q]]);
+                capital=true;
+            }
+            if(capital) continue;
+            
+            bool vowel=false;
+            string unv=unvowel(q);
+            if(vow.find(unv)!=vow.end()){
+                vowel=true;
+                ans.push_back(wordlist[vow[unv]]);
+            }
+            
+            if(vowel) continue;
+            else{
+                ans.push_back("");
+            }
+            
+        }
+        return ans;
+    }
+    
+    
+    
+    string unvowel(string& s){
+        string t;
+        for(auto& c: s){
+            if(!isvowel(c))
+                t+=c;
+            else
+                t+='*';
+        }
+        return t;
+    }
+    
+    string getlow(string s){
+        //string t(s.length(),'1');
+        for(int i=0;i<s.length();i++)
+            s[i]=tolower(s[i]);
+        return s;
+    }
+    bool isvowel(char& c){
+        return (c=='a' or c=='e' or c=='i' or c=='o' or c=='u');
+    }
+};

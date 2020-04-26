@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        vector<vector<char>> row(9);
+        vector<vector<char>> cols(9);
+        vector<vector<char>> blocks(9);
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                if(board[i][j]=='.')
+                    continue;
+                int blck=(3*(i/3)+j/3);
+                int rw=i;
+                int cw=j;
+                auto it1=find(row[i].begin(),row[i].end(),board[i][j]);
+                auto it2=find(cols[j].begin(),cols[j].end(),board[i][j]);
+                auto it3=find(blocks[blck].begin(),blocks[blck].end(),board[i][j]);
+                if(it1!=row[i].end() or it2!=cols[j].end() or it3!=blocks[blck].end())
+                    return false;
+                row[i].push_back(board[i][j]);
+                cols[j].push_back(board[i][j]);
+                blocks[blck].push_back(board[i][j]);
+            }
+        }
+        
+        return true;
+    }
+};
