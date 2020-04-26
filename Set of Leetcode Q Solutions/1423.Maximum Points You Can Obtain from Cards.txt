@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int K;
+    vector<vector<int>> dp;
+    int maxScore(vector<int>& nums, int k) {
+        K=k;
+        int n=nums.size();
+        int l=n-k,r=n-1;;
+        int sum=0;
+        for(int i=l;i<n;i++)
+            sum+=nums[i];
+        int mx=sum;
+        while((l%n)){
+            r++;
+            sum+=(nums[r%n]-nums[l%n]);
+            mx=max(mx,sum);
+            l++;
+        }
+        return mx;
+    }
+};
