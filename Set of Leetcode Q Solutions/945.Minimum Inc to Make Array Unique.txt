@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int minIncrementForUnique(vector<int>& A) {
+        sort(A.begin(),A.end());
+        int res=0,need=0;
+        for(auto i: A){
+            res+=(max(need-i,0));;
+            need=max(i,need)+1;
+        }
+        return res;
+    }
+};

@@ -1,0 +1,25 @@
+class Solution {
+public:
+    map<pair<int,int>,int> mp;
+    int largestOverlap(vector<vector<int>>& A, vector<vector<int>>& B) {
+        int n=A.size();
+        vector<pair<int,int>> a,b;
+           for(int i=0;i<n;i++)
+               for(int j=0;j<n;j++){
+                   if(A[i][j]) a.push_back({i,j});
+                   if(B[i][j]) b.push_back({i,j});
+               }
+        
+        int ans=0;
+        for(int i=0;i<a.size();i++){
+            for(int j=0;j<b.size();j++){
+                pair<int,int> p;
+                p.first=a[i].first-b[j].first;
+                p.second=a[i].second-b[j].second;
+                mp[p]++;
+                ans=max(ans,mp[p]);
+            }
+        }
+        return ans;
+    }
+};
