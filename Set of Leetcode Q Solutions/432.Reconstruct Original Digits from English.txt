@@ -1,0 +1,69 @@
+class Solution {
+public:
+    string originalDigits(string s) {
+        unordered_map<char,int> check;
+        for(auto c: s)
+            check[c]++;
+        
+        string ans;
+        int prev=check.size()-1;
+       // while(check.size()!=prev){
+         //   prev=check.size();
+            while(check.find('z')!=check.end() && check['z']>0){
+                ans+='0';
+                reduce(check,"zero");
+            }
+         //   cout<<ans<<endl;
+            while(check.find('w')!=check.end() && check['w']>0){
+                ans+='2';
+                reduce(check,"two");
+            }
+            while(check.find('u')!=check.end() && check['u']>0){
+                ans+='4';
+                reduce(check,"four");
+            }
+            while(check.find('x')!=check.end() && check['x']>0){
+                ans+='6';
+                reduce(check,"six");
+            }
+            while(check.find('g')!=check.end() && check['g']>0){
+                ans+='8';
+                reduce(check,"eight");
+            }
+       // }
+        
+       // while(check.size()){
+            while(check.find('f')!=check.end() && check['f']>0){
+                ans+='5';
+                reduce(check,"five");
+            }
+            while(check.find('v')!=check.end() && check['v']>0){
+                ans+='7';
+                reduce(check,"seven");
+            }
+            while(check.find('r')!=check.end() && check['r']>0){
+                ans+='3';
+                reduce(check,"three");
+            }
+            while(check.find('i')!=check.end() && check['i']>0){
+                ans+='9';
+                reduce(check,"nine");
+            }
+            while(check.find('o')!=check.end() && check['o']>0){
+                ans+='1';
+                reduce(check,"one");
+            }
+        //}
+        
+        sort(ans.begin(),ans.end());
+        return ans;
+    }
+    
+    void reduce(unordered_map<char,int>& mp,string s){
+        for(int i=0;i<s.length();i++){
+            mp[s[i]]--;
+            if(mp[s[i]]==0)
+                mp.erase(s[i]);
+        }
+    }
+};

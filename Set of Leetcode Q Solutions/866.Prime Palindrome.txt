@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int primePalindrome(int N) {
+        
+        if( N<10){
+            for(int i=2;i<10;i++)
+                if(i>=N && prime(i))
+                    return i;
+            }
+            
+        for(int i=1;i<=1e5;i++){
+            int x=i;
+            string k=to_string(i);
+            string t=k;
+            reverse(t.begin(),t.end());
+            string t1;
+            t1=k+t.substr(1);
+            long long fin=stol(t1);
+            if(fin>=N && prime(fin))
+                return fin;
+            t1=k+t;
+            fin= stol(t1);
+            if(fin>=N && prime(fin))
+                return fin;
+            
+        }
+        return N;
+    }
+    
+    bool prime(int n){
+        if(n==1) return false;
+        if(n==2) return true;
+        for(int i=2;i*i<=n;i++){
+            if(n%i==0)
+               return false;
+        }
+        return true;
+    }
+};
