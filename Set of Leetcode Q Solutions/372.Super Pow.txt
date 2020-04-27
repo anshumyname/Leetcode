@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int m=1337;
+    int superPow(int a, vector<int>& b) {
+        if(b.size()==1)
+            return power(a,b[0]);
+        int t=b[b.size()-1];
+        b.pop_back();
+        return power(superPow(a,b),10)%m*(power(a,t))%m;
+    }
+    
+    int power(int a,int k){
+        a%=m;
+        int res=1;
+        for(int i=0;i<k;i++)
+            res=(res*a)%m;
+        return res;
+    }
+};
