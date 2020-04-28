@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        sort(nums.begin(),nums.end());
+        set<vector<int>> ans;
+        int n=nums.size();
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                for(int k=j+1;k<n;k++){
+                    int search=(target-(nums[i]+nums[j]+nums[k]));
+                    int t=k+1;
+                    while(t<n){
+                        if(nums[t]==search)
+                            ans.insert({nums[i],nums[j],nums[k],search});
+                        t++;
+                    }
+                }
+            }
+        }
+        vector<vector<int>> x(ans.begin(),ans.end());
+        return x;
+    }
+};

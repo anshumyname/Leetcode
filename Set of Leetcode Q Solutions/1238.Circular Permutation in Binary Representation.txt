@@ -1,0 +1,53 @@
+class Solution {
+public:
+    vector<int> circularPermutation(int n, int start) {
+        vector<string> s;
+        int n_bit=n;
+        s.push_back("0");
+        s.push_back("1");
+        for(int j=1;j<n;j++){
+            auto v=s;
+            reverse(v.begin(),v.end());
+            for(int i=0;i<s.size();i++)
+                s[i]="0"+s[i];
+            for(int i=0;i<s.size();i++)
+                v[i]="1"+v[i];
+            s.insert(s.end(),v.begin(),v.end());
+        }
+        string f= tobin(start,n);
+        int idx= find(s.begin(),s.end(),f)-s.begin();
+        for(int i=0;i<idx;i++)
+            s.push_back(s[i]);
+        s.erase(s.begin(),s.begin()+idx);
+        vector<int> ans;
+        for(auto str: s)
+            ans.push_back(toint(str));
+        return ans;        
+    }
+    
+    int toint(string s){
+        int ii=0;
+        reverse(s.begin(),s.end());
+        for(int i=0;i<s.length();i++){
+            if(s[i]=='1'){
+                   ii+=(pow(2,i));
+            }
+        }
+        return ii;
+    }
+    string tobin(int start,int bit){
+        int n=start;
+        string t;
+        while(n){
+            char c=n%2+'0';
+            t=c+t;
+            n/=2;
+        }
+        if(t.length()<bit){
+            int add= bit-t.length();
+            while(add--)
+                t='0'+t;
+        }
+        return t;
+    }
+};

@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int numberOfArithmeticSlices(vector<int>& A) {
+        int n=A.size();
+        int glob=0;
+        for(int i=0;i<n-2;i++){
+            int d=A[i+1]-A[i];
+            int k=i,c=0;
+            while(k+1<n && (A[k+1]-A[k])==d){
+                c++;
+                k++;
+            }
+                if(c>=2)
+                    glob+=(c-1);
+        }
+        return glob;
+    }
+    
+   
+};
