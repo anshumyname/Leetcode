@@ -1,0 +1,20 @@
+class Solution {
+public:
+    bool isValidSerialization(string preorder) {
+        int n=1;
+        string node;
+        istringstream in(preorder);
+        
+        while(getline(in,node,',')){
+            //if(node!=",") continue;
+            n--;
+            if(n<0)
+                return false;
+            if(node!="#")
+                n+=2;
+            
+        }
+        
+        return n==0;
+    }
+};
