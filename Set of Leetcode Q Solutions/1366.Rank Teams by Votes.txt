@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool static comp(pair<char,vector<int>>& p1,pair<char,vector<int>>& p2){
+        for(int i=0;i<p1.second.size();i++)
+            if(p1.second[i]!=p2.second[i])
+                return p1.second[i]>p2.second[i];
+            
+        return p1.first<p2.first;
+    }
+    unordered_map<char,vector<int>> mp;
+    string rankTeams(vector<string>& votes) {
+        for(int i=0;i<votes[0].length();i++)
+            mp[votes[0][i]].resize(votes[0].length(),0);
+        
+        for(auto s:votes){
+            for(int i=0;i<s.length();i++){
+                mp[s[i]][i]++;
+            }
+        }
+        vector<pair<char,vector<int>>> v(mp.begin(),mp.end());
+        sort(v.begin(),v.end(),comp);
+        string s;
+        for(auto x: v)
+            s+=x.first;
+        return s;
+    }
+};

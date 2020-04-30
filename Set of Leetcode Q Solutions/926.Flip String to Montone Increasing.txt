@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int minFlipsMonoIncr(string S) {
+        int ones=0,zeros=0,n=S.length();
+        if(!n) return 0;
+        for(int i=0;i<n;i++)
+            if(S[i]=='0')
+                zeros++;
+            else
+                ones++;
+    
+        if(!zeros or !ones) return 0;
+        int z=0,ans=n+1;
+        for(int i=0;i<n;i++){
+            z=z+(S[i]=='0');
+            int flip=n+1;
+            if(S[i]=='0'){
+                int tone=(i+1-z);
+                int rzer= (zeros-z);
+                flip= tone+rzer;
+            }
+            else{
+                int tone=(i-z);
+                int rzer=(zeros-z);
+                flip=tone+rzer;
+            }
+            
+            ans=min(flip,ans);
+
+        }
+        return ans;
+            
+    }
+};
