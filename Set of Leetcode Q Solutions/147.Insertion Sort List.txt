@@ -1,0 +1,67 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* insertionSortList(ListNode* head) {
+        if(!head or !head->next) return head;
+        
+        ListNode* p= new ListNode(-1);
+        ListNode* temp=head;
+        ListNode* pre=p;
+        ListNode* nx=NULL;
+        while(temp){
+            nx=temp->next;
+            
+            while(pre->next && pre->next->val<temp->val)
+                pre=pre->next;
+            
+            temp->next=pre->next;
+            pre->next=temp;
+            pre=p;
+            temp=nx;
+        }
+        
+        return p->next;
+    }
+};/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* insertionSortList(ListNode* head) {
+        if(!head or !head->next) return head;
+        
+        ListNode* p= new ListNode(-1);
+        ListNode* temp=head;
+        ListNode* pre=p;
+        ListNode* nx=NULL;
+        while(temp){
+            nx=temp->next;
+            
+            while(pre->next && pre->next->val<temp->val)
+                pre=pre->next;
+            
+            temp->next=pre->next;
+            pre->next=temp;
+            pre=p;
+            temp=nx;
+        }
+        
+        return p->next;
+    }
+};

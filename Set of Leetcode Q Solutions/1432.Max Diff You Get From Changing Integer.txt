@@ -1,0 +1,34 @@
+auto x= head;
+            while(x){
+                cout<<x->val<<" ";
+                x=x->next;
+            }
+            cout<<endl;class Solution:
+    def maxDiff(self, num: int) -> int:
+        st= str(num)
+        copy1=st
+        copy2=st
+        for x in range(len(st)):
+            if st[x]!='9':
+                copy1=st.replace(st[x],'9');
+                break
+        
+        
+        if st[0]=='1':
+            #print(copy2)
+            for x in range(1,len(st)):
+                if st[x]!=st[0] and st[x]!='0':
+                    copy2=st.replace(st[x],'0');
+                    break
+            
+            #print(copy2)       
+            if int(copy2)==0 and int(copy2)>int(st):
+                copy2="1"*len(st)
+        else:
+            copy2= st.replace(st[0],'1')
+        
+        
+        return int(copy1)-int(copy2)
+        
+        
+        
