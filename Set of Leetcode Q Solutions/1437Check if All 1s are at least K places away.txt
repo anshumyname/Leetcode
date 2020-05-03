@@ -1,0 +1,17 @@
+class Solution {
+public:
+    bool kLengthApart(vector<int>& nums, int k) {
+        vector<int> v;
+        for(int i=0;i<nums.size();i++)
+            if(nums[i]==1)
+                v.push_back(i);
+        if(v.size()==0)
+            return true;
+        for(int x=0;x<v.size()-1;x++){
+            //cout<<v[x+1]<<" "<<v[x]<<endl;
+            if((v[x+1]-v[x]-1)<k)
+                return false;
+        }
+        return true;
+    }
+};

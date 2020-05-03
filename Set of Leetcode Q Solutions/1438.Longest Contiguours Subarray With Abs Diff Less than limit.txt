@@ -1,0 +1,49 @@
+class Solution {
+public:
+    int longestSubarray(vector<int>& nums, int k) {
+        priority_queue<pair<int,int>> pqmx;
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pqmn;
+        int left=0;
+        pqmx.push({nums[0],0}); pqmn.push({nums[0],0});
+        int len=1;
+        for(int i=1;i<nums.size();i++){
+            int mx=max(pqmx.top().first,nums[i]);
+            int mn=min(pqmn.top().first,nums[i]);
+            pqmx.push({nums[i],i});
+            pqmn.push({nums[i],i});
+            if(abs(mx-mn)<=k){
+                len=max(len,i-left+1);
+            }
+            else{
+                while(abs(pqmx.top().first-pqmn.top().first)>k){
+                vector<pair<int,int>> v; 
+                while(pqmx.top().second!=left){
+                    v.push_back(pqmx.top()); 
+                    pqmx.pop();
+                }
+                pqmx.pop();
+                
+                for(auto x: v)
+                    pqmx.push(x);
+                
+                vector<pair<int,int>> v2; 
+                while(pqmn.top().second!=left){
+                    v2.push_back(pqmn.top()); 
+                    pqmn.pop();
+                }
+                
+                pqmn.pop();
+                for(auto x: v2)
+                    pqmn.push(x);
+                 //cout<<
+                left++;
+                }
+            }
+           // cout<<mx<<" "<<mn<<" "<<len<<endl;
+            //cout<<pqmx.size()<<" "<<pqmn.size();
+            //cout<<i<<" "<<left<<endl;;
+        }
+        //cout<<"==========================\n";
+        return len;
+    }
+};
