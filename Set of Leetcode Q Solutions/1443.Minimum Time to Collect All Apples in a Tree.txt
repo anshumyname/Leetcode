@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<vector<int>> v;
+    unordered_set<int> glob;
+    int minTime(int n, vector<vector<int>>& edges, vector<bool>& hasApple) {
+        v.resize(n+1);
+        for(auto e: edges){
+            v[e[0]].push_back(e[1]);
+        }
+        vector<int> vex;
+        dfs(0,hasApple,vex);
+        int x=0;
+        for(auto e: edges){
+            if(glob.find(e[0])!=glob.end() && glob.find(e[1])!=glob.end())
+                x++;
+        }
+        return 2*x;
+    }
+    
+     void dfs(int i,vector<bool>& oranges,vector<int>& vex){
+        if(oranges[i]==true){
+            for(auto x: vex){
+                glob.insert(x);
+            }
+            glob.insert(i);
+        }
+        vex.push_back(i);
+         for(auto x: v[i])
+             dfs(x,oranges,vex);
+         vex.pop_back();
+    }
+};
