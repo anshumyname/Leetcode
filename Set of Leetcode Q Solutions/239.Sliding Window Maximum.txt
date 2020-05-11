@@ -1,0 +1,43 @@
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        vector<vector<int>> look;
+        constr(look,nums);
+        vector<int> ans;
+        int n=nums.size();
+        // for(int i=0;i<n;i++){
+        //     for(int j=0;j<look[0].size();j++){
+        //         cout<<look[i][j]<<" ";
+        //     }
+        //     cout<<endl;
+        // }
+        
+        for(int i=0;i<n-k+1;i++){
+            ans.push_back(query(i,i+k-1,look));
+        }
+                          
+        return ans;
+    }
+    
+    void constr(vector<vector<int>>& look,vector<int>& nums){
+    int m=nums.size();
+    look.resize(m,vector<int> (31,INT_MIN));
+    for(int i=0;i<m;i++){
+        look[i][0]=nums[i];
+    }
+    
+    for(int i=1;(1<<i)<=nums.size();i++){
+        for(int j=0;(j+(1<<i)-1)<nums.size();j++){
+            look[j][i]=max(look[j][i-1],look[j+(1<<(i-1))][i-1]);
+        }
+    }
+        
+}
+
+int query(int l,int r,vector<vector<int>>& look){
+    int len= r-l+1;
+    int k= log2(len);
+
+    return max(look[l][k],look[l+len-(1<<k)][k]);
+}
+};
