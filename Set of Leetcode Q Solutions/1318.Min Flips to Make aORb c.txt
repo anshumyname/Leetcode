@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int minFlips(int a, int b, int c) {
+        int cx=0;
+        for(int i=31;i>=0;i--){
+            int abit=(a>>i)&1;
+            int bbit=(b>>i)&1;
+            int cbit=(c>>i)&1;
+            int aorb=(abit | bbit);
+            cx+=(aorb^cbit);
+            if(abit==1 && bbit==1 && cbit==0) cx++;
+        }
+        return cx;
+    }
+};

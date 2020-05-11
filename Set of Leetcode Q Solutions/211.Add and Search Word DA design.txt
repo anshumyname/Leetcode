@@ -1,0 +1,65 @@
+struct node {
+    bool end;
+    vector<node* > v;
+};
+class WordDictionary {
+private:
+    node* root;
+public:
+    /** Initialize your data structure here. */
+    node* getnode(){
+        node* temp= new node();
+        temp->end=false;
+        temp->v.resize(26,NULL);
+        return temp;
+    }
+    WordDictionary() {
+        root= getnode();
+    }
+    
+    /** Adds a word into the data structure. */
+    void addWord(string word) {
+        node* tr=root;
+        for(int i=0;i<word.length();i++){
+            int idx= word[i]-'a';
+            //cout<<word[i]<<" "<<i<<" "<<idx<<endl;
+            if(tr->v[idx]==NULL)
+                tr->v[idx]=getnode();
+            tr=tr->v[idx];
+        }
+        tr->end=true;
+    }
+    
+    /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
+    bool search(string word) {
+        node* t=root;
+        bool flg= helper(0,t,word);
+        return flg;
+    }
+    
+    bool helper(int i,node* rt,string& word){
+        if(i==(word.length()))
+            return rt->end;
+        if(word[i]=='.'){
+            for(int x=0;x<26;x++){
+                if(rt->v[x] && helper(i+1,rt->v[x],word))
+                    return true;
+            }
+            
+            return false;
+        }
+        
+        int idx= word[i]-'a';
+        
+        if(!rt->v[idx])
+            return false;
+        return helper(i+1,rt->v[idx],word);
+    }
+};
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary* obj = new WordDictionary();
+ * obj->addWord(word);
+ * bool param_2 = obj->search(word);
+ */

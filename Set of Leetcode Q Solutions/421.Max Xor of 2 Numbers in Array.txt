@@ -1,0 +1,74 @@
+struct node {
+    bool end;
+    vector<node* > v;
+};
+class Solution {
+public:
+    node* root;
+    int findMaximumXOR(vector<int>& nums) {
+         root= getnode();
+        for(int i=0;i<nums.size();i++)
+            insert(nums[i]);
+        
+        return getxor(nums);
+        
+    }
+    
+    int getxor(vector<int>& nums){
+        int maxf=INT_MIN;
+        
+        for(int i=0;i<nums.size();i++){
+            node* tr=root;
+            int val=nums[i];
+            int curxor=0;
+            for(int k=31;k>=0;k--){
+                int bit= (val>>k)&1;
+                if(bit==0){
+                    if(tr->v[1]){
+                        curxor+=pow(2,k);
+                        tr=tr->v[1];
+                    }
+                    else
+                        tr=tr->v[0];
+                }
+                else{
+                    if(tr->v[0]){
+                        tr=tr->v[0];
+                    }
+                    else{
+                        curxor+=pow(2,k);
+                        tr=tr->v[1];
+                    }
+                }
+            }
+            maxf= max(maxf,val^curxor);
+        }
+        return maxf;
+    }
+    
+     node* getnode(){
+        node* temp= new node();
+        temp->end=false;
+        temp->v.resize(2,NULL);
+        return temp;
+    }  
+    
+    void insert(int n){
+        node* tr=root;
+        for(int k=31;k>=0;k--){
+            int bit=(n>>k)&1;
+            if(bit==0){
+                if(!tr->v[0])
+                    tr->v[0]=getnode();
+                tr=tr->v[0];
+            }
+            else{
+                if(!tr->v[1])
+                    tr->v[1]=getnode();
+                tr=tr->v[1];
+            }            
+        }
+    }
+    
+    
+};
