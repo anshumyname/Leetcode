@@ -1,0 +1,40 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* balanceBST(TreeNode* root) {
+        vector<int> v;
+        inord(root,v);
+        int n=v.size();
+        return con(v,0,n-1);
+    }
+    
+    TreeNode* con(vector<int>& v,int st,int en){
+        if(st>en) return NULL;
+        if(st==en){
+            TreeNode* t= new TreeNode(v[st]);
+            return t;
+        }
+        int mid=st+(en-st)/2;
+        TreeNode* x=new TreeNode(v[mid]);
+        x->left=con(v,st,mid-1);
+        x->right=con(v,mid+1,en);
+        return x;
+        
+    }
+    
+    void inord(TreeNode* root,vector<int>& v){
+        if(!root) return;
+        inord(root->left,v);
+        v.push_back(root->val);
+        inord(root->right,v);
+    }
+    
+};
