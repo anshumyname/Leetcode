@@ -1,0 +1,31 @@
+class H2O {
+public:
+    mutex m1,m2;
+    int c=0;
+    H2O() {
+        c=0;
+        m1.unlock();
+        m2.lock();
+    }
+
+    void hydrogen(function<void()> releaseHydrogen) {
+        m1.lock();
+        c++;
+        
+        // releaseHydrogen() outputs "H". Do not change or remove this line.
+        releaseHydrogen();
+        if(c%2==0){
+            m2.unlock();
+        }
+        else{
+            m1.unlock();
+        }
+    }
+
+    void oxygen(function<void()> releaseOxygen) {
+        m2.lock();
+        // releaseOxygen() outputs "O". Do not change or remove this line.
+        releaseOxygen();
+        m1.unlock();
+    }
+};

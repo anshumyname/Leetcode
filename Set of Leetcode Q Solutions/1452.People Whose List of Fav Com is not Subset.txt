@@ -1,0 +1,38 @@
+class Solution {
+public:
+    // bool static cmp(pair<int,vector<string>>& p1,pair<int,vector<string>>& p2){
+    //     if(p1.second.size()==p2.second.size())
+    //         return p1.first<p2.first;
+    //     return p1.second.size()>p2.second.size();
+    // }
+    vector<int> peopleIndexes(vector<vector<string>>& fc) {
+        //unordered_map<string,int> mp;
+        vector<int> ind;
+        unordered_map<string,vector<int>> all;
+        int k=0;
+        for(int i=0;i<fc.size();i++){
+            for(int j=0;j<fc[i].size();j++){
+                // if(mp.find(fc[i][j])==mp.end())
+                //     mp[fc[i][j]]=k++;
+                all[fc[i][j]].push_back(i);
+            }
+        }
+        
+        for(int i=0;i<fc.size();i++){
+            unordered_map<int,int> mp;
+            for(int j=0;j<fc[i].size();j++){
+                for(auto& x: all[fc[i][j]])
+                    mp[x]++;
+            }
+            set<int> s;
+            for(auto it: mp)
+                if(it.second==fc[i].size())
+                    s.insert(it.first);
+            if(s.size()==1)
+                ind.push_back(i);
+        }
+        
+        return ind;
+    
+    }
+};
