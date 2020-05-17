@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int tot=0;
+    int clumsy(int N,int x=-1) {
+        if(N==0) return 0;
+        if(N==1) return 1;
+        if(N==2) return 2;
+        if(N==3) return 6;
+        int calc=(N*(N-1))/(N-2);
+        
+        int rem=N-3;
+        N-=4;
+    
+        while((N-4)>=0){
+            calc-=((N*(N-1))/(N-2));
+            rem+=(N-3);
+            N-=4;
+        }
+        
+        if(N) 
+            calc-=clumsy(N);
+        return calc+rem;
+    }
+};
