@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<int> findDiagonalOrder(vector<vector<int>>& matrix) {
+        vector<int> ans;
+        int m=matrix.size();
+        if(!m) return {};
+        int n=matrix[0].size();
+        int tot=m*n,i=0,j=0,turn=0;
+        unordered_map<int,vector<int>> mp;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                mp[i+j].push_back(matrix[i][j]);
+            }
+        }
+        
+        for(int lev=0;lev<(m+n-1);lev++){
+            if(lev%2==0)
+                reverse(mp[lev].begin(),mp[lev].end());
+            ans.insert(ans.end(),mp[lev].begin(),mp[lev].end());
+        }
+       
+        
+        return ans;
+    }
+};

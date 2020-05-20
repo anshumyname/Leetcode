@@ -1,0 +1,139 @@
+/*
+// Definition for a QuadTree node.
+class Node {
+public:
+    bool val;
+    bool isLeaf;
+    Node* topLeft;
+    Node* topRight;
+    Node* bottomLeft;
+    Node* bottomRight;
+    
+    Node() {
+        val = false;
+        isLeaf = false;
+        topLeft = NULL;
+        topRight = NULL;
+        bottomLeft = NULL;
+        bottomRight = NULL;
+    }
+    
+    Node(bool _val, bool _isLeaf) {
+        val = _val;
+        isLeaf = _isLeaf;
+        topLeft = NULL;
+        topRight = NULL;
+        bottomLeft = NULL;
+        bottomRight = NULL;
+    }
+    
+    Node(bool _val, bool _isLeaf, Node* _topLeft, Node* _topRight, Node* _bottomLeft, Node* _bottomRight) {
+        val = _val;
+        isLeaf = _isLeaf;
+        topLeft = _topLeft;
+        topRight = _topRight;
+        bottomLeft = _bottomLeft;
+        bottomRight = _bottomRight;
+    }
+};
+*/
+
+class Solution {
+public:
+    Node* construct(vector<vector<int>>& grid) {
+        int N=grid.size();
+        if(N==1){
+            Node* root= new Node(grid[0][0],true);
+            return root;
+        }
+        vector<vector<int>> tleft(N/2,vector<int> (N/2,0));
+        vector<vector<int>> tright(N/2,vector<int> (N/2,0));
+        vector<vector<int>> bleft(N/2,vector<int> (N/2,0));
+        vector<vector<int>> bright(N/2,vector<int> (N/2,0));
+        int tlef=0,tri=0,blef=0,bri=0;
+        
+        for(int i=0;i<N/2;i++){
+            for(int j=0;j<N/2;j++){
+                tleft[i][j]=grid[i][j];
+                if(grid[i][j])
+                    tlef++;
+            }
+        }
+        
+        for(int i=N/2;i<N;i++){
+            for(int j=0;j<N/2;j++){
+                bleft[i-N/2][j]=grid[i][j];
+                if(grid[i][j])
+                    blef++;
+            }
+        }
+        
+        for(int i=0;i<N/2;i++){
+            for(int j=N/2;j<N;j++){
+                tright[i][j-N/2]=grid[i][j];
+                if(grid[i][j])
+                    tri++;
+            }
+        }
+        
+        for(int i=N/2;i<N;i++){
+            for(int j=N/2;j<N;j++){
+                bright[i-N/2][j-N/2]=grid[i][j];
+                if(grid[i][j])
+                    bri++;
+            }
+        }
+        
+        
+        
+        Node* root= new Node();
+        if((tlef+tri+blef+bri)==0 or (tlef+tri+blef+bri)==(N*N))
+        {
+            root->val=((tlef+tri+blef+bri)==0)?0:1;
+            root->isLeaf=true;
+            return root;
+        }
+        
+        root->isLeaf=false;
+        root->val=true;
+        int tot=(N*N)/4;
+        
+        if(tlef==0 or tlef==tot){
+            int value= (tlef==0)?0:1;
+            Node* lef= new Node(value,true);
+            root->topLeft=lef;
+        }
+        else{
+            root->topLeft=construct(tleft);
+        }
+        
+        if(tri==0 or tri==tot){
+            int value= (tri==0)?0:1;
+            Node* lef= new Node(value,true);
+            root->topRight=lef;
+        }
+        else{
+            root->topRight= construct(tright);
+        }
+        
+        if(blef==0 or blef==tot){
+            int value= (blef==0)?0:1;
+            Node* lef= new Node(value,true);
+            root->bottomLeft=lef;
+        }
+        else{
+            root->bottomLeft= construct(bleft);
+        }
+        
+        if(bri==0 or bri==tot){
+            int value= (bri==0)?0:1;
+            Node* lef= new Node(value,true);
+            root->bottomRight=lef;
+        }
+        else{
+            root->bottomRight= construct(bright);
+        }    
+        
+        return root;
+    }
+};
