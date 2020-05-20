@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int m=1e9+7;
+    vector<vector<int>> dp;
+    int dieSimulator(int n, vector<int>& rollMax) {
+        dp.resize(n,vector<int> (7,0));
+        
+        for(int x=0;x<6;x++)
+            dp[0][x]=1;
+        
+        dp[0][6]=6;
+        
+        for(int i=1;i<n;i++){
+            int sum=0;
+            for(int j=0;j<6;j++){
+                dp[i][j]=dp[i-1][6];
+                if(i-rollMax[j]<0){
+                    sum=(sum%m+dp[i][j]%m)%m;
+                }
+                else{
+                    if(i-rollMax[j]-1>=0) dp[i][j] = ((dp[i][j]%m - (dp[i - rollMax[j] - 1][6] - dp[i - rollMax[j] - 1][j])) % m + m)%m;
+                    else
+                        dp[i][j]=(dp[i][j]-1)%m;;
+                    
+                    sum=(sum%m+dp[i][j]%m)%m;
+                }
+                
+            }
+            dp[i][6]=sum;
+        }
+        
+        return dp[n-1][6];
+    }
+};
