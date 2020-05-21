@@ -1,0 +1,32 @@
+
+class Solution {
+public:
+    vector<int> ans;
+    int k=0;
+    vector<int> lexicalOrder(int n) {
+        ans.resize(n,-1);
+        start(true,0,&n);
+        
+        return ans;
+    }
+    
+    void start(bool first,long prev,int* limit){
+        if(prev>*limit)
+            return;
+        
+        int st=(first)?1:0;
+        for(int i=st;i<10;i++){
+            long store=prev;
+            prev=prev*10+i;
+            if(prev<=*limit)
+                ans[k++]=((int)prev);
+            if (prev>=*limit){
+                prev=store;
+                continue;
+            }
+            if(ans[*limit-1]!=-1) return;
+            start(false,prev,limit);
+            prev=store;
+        }
+    }
+};
