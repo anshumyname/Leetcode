@@ -1,0 +1,9 @@
+class Solution:
+    def lengthLongestPath(self, input: str) -> int:
+        ret, temp=0, {-1:0}
+        for p in input.split('\n'):
+            dep= p.count('\t')
+            temp[dep]=temp[dep-1]+len(p)- dep
+            if '.' in p:
+                ret=max(ret,dep+temp[dep])
+        return ret

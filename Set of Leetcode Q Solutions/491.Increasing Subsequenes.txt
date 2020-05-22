@@ -1,0 +1,28 @@
+class Solution {
+public:
+    set<vector<int>> ans;
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
+        vector<int> emp;
+        help(emp,0,nums);
+        vector<vector<int>> vx(ans.begin(),ans.end());   
+        return vx;
+    }
+    
+    void help(vector<int>& v,int i,vector<int>& nums){
+        if(v.size()>=2){
+            ans.insert(v);
+        }
+        
+        for(int k=i;k<nums.size();k++){
+            
+            int n=v.size();
+            if(!n or nums[k]>=v[n-1]){
+                v.push_back(nums[k]);
+                help(v,k+1,nums);
+                v.pop_back();
+            }
+                
+        }
+        
+    }
+};
