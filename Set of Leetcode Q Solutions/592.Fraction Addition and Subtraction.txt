@@ -1,0 +1,52 @@
+import math
+class Solution:
+    def fractionAddition(self, expression: str) -> str:
+        expression= expression.replace('+','/')
+        got= expression.split('/')
+        num,denm=0,0
+        
+        for e in range(len(got)):
+            
+            if len(got[e])>=3 and '-' in got[e] and got[e][0]!='-':
+                newli=got[e].split('-')
+                got[e]=[newli[0],'-'+newli[1]]
+                
+        ggot=[]
+        for x in got:
+            if isinstance(x,str):
+                ggot.append(x)
+                continue
+            for g in x:
+                ggot.append(g)
+                
+       
+        num=int(ggot[0])
+        denm=int(ggot[1])
+        
+        for i in range(2,len(ggot),2):
+            
+            newnums=int(ggot[i])
+            newdenm=int(ggot[i+1])
+            
+            gc= int(math.gcd(newdenm,denm))
+            lcm= int((newdenm*denm)/gc)
+            
+            num= (num*(lcm/denm))+(newnums*(lcm/newdenm))
+            denm=int(lcm)
+            num=int(num)
+            cut= int(math.gcd(num,denm))
+            num/=cut
+            denm/=cut
+            num=int(num)
+            denm=int(denm)
+            
+            
+        return str(int(num))+'/'+str(int(denm))
+            
+            
+            
+                
+            
+                
+                
+        

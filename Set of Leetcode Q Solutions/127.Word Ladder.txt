@@ -1,0 +1,89 @@
+class Solution {
+public:
+    string endw;
+    int ladderLength(string bw, string ew, vector<string>& wL) {
+        if(find(wL.begin(),wL.end(),ew)==wL.end()) return 0;
+        endw=ew;
+        unordered_set<string> check;
+        for(auto w: wL) check.insert(w);
+        //====================================================Construct Graph
+        unordered_map<string,vector<string>> mp;
+        for(int i=0;i<wL.size();i++){
+            string s=wL[i];
+            for(int j=0;j<s.length();j++){
+                for(int k=0;k<26;k++){
+                    char c=s[j];
+                    char rep='a'+k;
+                    if(c!=rep){
+                        s[j]=rep;
+                        if(check.find(s)!=check.end())
+                            mp[wL[i]].push_back(s);
+                        s[j]=c;
+                    }
+                    
+                }
+            }
+        }
+        //====================================================
+        
+        // for(auto x: mp){
+        //     cout<<x.first<<" ";
+        //     for(auto k: x.second)
+        //         cout<<k<<" ";
+        //     cout<<endl;
+        // }
+        //====================================================Do BFS
+        
+        long ans=INT_MAX;
+       
+        if(check.find(bw)!=check.end())
+            ans=bfs(mp,bw);
+        
+   
+        for(int i=0;i<bw.length();i++){
+            for(int k=0;k<26;k++){
+                    char c=bw[i];
+                    char rep='a'+k;
+                    if(c!=rep){
+                        bw[i]=rep;
+                        if(check.find(bw)!=check.end())
+                                ans=min(ans,1+bfs(mp,bw));             
+                        bw[i]=c;
+                    }
+            }
+        }
+ 
+        return ans==INT_MAX?0:(int)ans; 
+    }
+    
+    long bfs(unordered_map<string,vector<string>>& mp,string start){
+        unordered_map<string,int> vis;
+        vis[start]=1;
+        queue<string> q;
+        q.push(start);
+        int l=1;
+        bool found=false;
+        while(!q.empty()){
+            int sz=q.size();
+            while(sz--){
+                auto f= q.front(); q.pop();
+                if(f==endw){
+                    found=true;
+                    break;
+                }
+                for(auto it: mp[f]){
+                    if(vis[it]==0){
+                        vis[it]=1;
+                        q.push(it);
+                    }
+                }
+            }
+            if(found) break;
+            l++;
+        }
+        
+        return found?l:INT_MAX;
+    }
+    
+
+};

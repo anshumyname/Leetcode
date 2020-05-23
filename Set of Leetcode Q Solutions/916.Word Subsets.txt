@@ -1,0 +1,44 @@
+class Solution {
+public:
+    vector<unordered_map<char,int>> v;
+    unordered_map<char,int> ch;
+    
+    vector<string> wordSubsets(vector<string>& A, vector<string>& B) {
+        vector<string> ans;
+        v.resize(A.size());
+        
+        for(int i=0;i<A.size();i++){
+            for(auto c: A[i])
+                v[i][c]++;
+        }
+        
+        for(int i=0;i<B.size();i++){
+            vector<int> fr(26,0);
+            for(auto k: B[i])
+                fr[k-'a']++;
+            for(int i=0;i<26;i++){
+                ch['a'+i]=max(ch['a'+i],fr[i]);
+            }
+        }
+        //========================================
+        
+        //======================================
+        for(int i=0;i<A.size();i++){
+            if(ispossible(i))    
+                ans.push_back(A[i]);
+        }
+        return ans;
+    }
+    
+    bool ispossible(int i){
+        for(auto it: ch){
+            if(v[i][it.first]>=it.second)
+                continue;
+            else
+                return false;
+        }
+        
+        return true;
+        
+    }
+};
