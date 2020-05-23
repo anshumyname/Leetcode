@@ -1,0 +1,18 @@
+class Solution {
+public:
+    vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries) {
+        int n=arr.size();
+        vector<int>  v(n);
+        for(int i=0;i<n;i++){
+            v[i]=(i==0)?arr[0]:arr[i]^v[i-1];
+        }
+        
+        vector<int> ans;
+        for(auto q: queries){
+            auto ant=(q[0]==0)?v[q[1]]:v[q[1]]^v[q[0]-1];
+            ans.push_back(ant);
+        }
+        
+        return ans;
+    }
+};

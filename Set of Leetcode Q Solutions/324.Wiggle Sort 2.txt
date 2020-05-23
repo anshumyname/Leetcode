@@ -1,0 +1,16 @@
+class Solution {
+public:
+    void wiggleSort(vector<int>& nums) {
+        int n=nums.size();
+        vector<int> t=nums;
+        sort(t.begin(),t.end());
+        
+        int i=n-1;
+        int j=(n-1)/2;
+        int k=0;
+        while(k<n){
+            if(k%2) nums[k++]=t[i--];
+            else nums[k++]=t[j--];
+        }
+    }
+};
