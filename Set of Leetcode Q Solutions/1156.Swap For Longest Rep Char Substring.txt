@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int maxRepOpt1(string text) {
+        vector<pair<char,int>> v;
+        unordered_map<char,int> mp;
+        for(auto c: text)
+            mp[c]++;
+        int i=0,n=text.length();
+        while(1){
+            if(i>=text.length())
+                break;
+            int c=1;
+            char x=text[i];
+            while(i+1<n && text[i+1]==text[i]){
+                c++;
+                i++;
+            }
+            v.push_back({x,c});
+            i++;
+        }
+        
+        int res=0;
+        for(auto it: v){
+            res=max(res,min(it.second+1,mp[it.first]));
+        }
+        
+        for(int i=1;i<v.size()-1;i++){
+            if(v[i-1].first==v[i+1].first && v[i].second==1){
+                res=max(res,min(v[i-1].second+v[i+1].second+1,mp[v[i-1].first]));
+            }
+        }
+        
+        
+        
+        return res;
+        
+        
+    }
+};

@@ -1,0 +1,71 @@
+class Solution {
+public:
+    string solveEquation(string s) {
+        int idx=s.find('=');
+        string left=s.substr(0,idx);
+        string right= s.substr(idx+1);
+        
+        auto lp= parse(left);
+        auto rp= parse(right);
+        int lsum=0,rsum=0;
+        for(auto i: lp.second)
+            lsum+=i;
+        for(auto i: rp.second)
+            rsum+=i;
+        if(lp.first==rp.first && lsum==rsum)
+            return "Infinite solutions";
+        int totcoeff=lp.first-rp.first;
+        
+        int totconst=rsum-lsum;
+        
+        if(totcoeff==0){
+            return "No solution";
+        }
+        
+        return "x="+to_string(totconst/totcoeff);
+    }
+    
+    pair<int,vector<int>> parse(string& s){
+        vector<int> vl;
+        
+        int lcoef=0,i=s.length()-1;
+        
+        while(1){
+            
+            if(i<0) break;
+            bool coef=(s[i]=='x');
+                string t;
+            
+            if(coef)
+                i--;
+            
+            
+            
+            while(i>=0 && (s[i]!='+' && s[i]!='-')){
+                t=s[i]+t;
+                i--;
+            }
+             
+            int c;
+                if(t=="")
+                    c=1;
+                else
+                    c=stoi(t);
+            
+                if(i!=-1){
+                    if(s[i]=='-')
+                        c=-c;
+                }
+                
+                
+            if(coef)
+                lcoef+=c;
+            else
+                vl.push_back(c);
+            
+            i--; 
+        }
+        
+        return {lcoef,vl};
+    }
+};
