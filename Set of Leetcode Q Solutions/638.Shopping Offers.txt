@@ -1,0 +1,49 @@
+class Solution {
+public:
+    unordered_map<string,int> dp;
+    int shoppingOffers(vector<int>& price, vector<vector<int>>& special, vector<int>& needs) {
+        string need;
+        for(auto x: needs)
+            need+=(x+'0');
+        return help(need,special,price);
+        
+    }
+    
+    int help(string s,vector<vector<int>>& special,vector<int>& price){
+        if(dp.find(s)!=dp.end())
+            return dp[s];
+        
+        int cost=0;
+        for(int k=0;k<s.length();k++){
+              cost+=price[k]*(s[k]-'0');
+        }
+        
+        int idx=-1;
+        for(int i=0;i<special.size();i++){
+            int t=0;
+            bool valid=true;
+            for(int k=0;k<s.length();k++){
+                if((s[k]-'0')<special[i][k])
+                    valid=false;
+            }
+            
+            if(valid==false)
+                continue;
+            else{
+                t=special[i][s.length()];
+                string tt;
+                for(int k=0;k<s.length();k++){
+                    tt+=(((s[k]-'0')-special[i][k])+'0');
+                }
+                   
+                cost=min(cost,t+help(tt,special,price));
+            }
+        }
+        
+        
+        dp[s]=cost;
+        return cost;
+        
+    }
+    
+};

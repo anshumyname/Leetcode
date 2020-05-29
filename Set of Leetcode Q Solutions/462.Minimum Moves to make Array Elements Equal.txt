@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int minMoves2(vector<int>& nums) {
+        int n=nums.size();
+        sort(nums.begin(),nums.end());
+        if(n%2==1){
+            int idx=n/2;
+            return f(nums[idx],nums);
+        }
+        
+        int idx=n/2;
+        int c1=f(nums[idx],nums);
+        int c2=f(nums[idx-1],nums);
+        return min(c1,c2);
+        
+    }
+    
+    int f(int x,vector<int>& nums){
+        int t=0;
+        for(auto e: nums){
+            t+=abs(e-x);
+        }
+        
+        return t;
+    }
+};
