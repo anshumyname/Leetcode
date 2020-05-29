@@ -1,0 +1,14 @@
+class Solution:
+    def minAreaRect(self, points: List[List[int]]) -> int:
+        seen =set()
+        area= float('inf')
+        for (x,y) in points:
+            for (x2,y2) in seen:
+                if ((x,y2) in seen) and ((x2,y) in seen):
+                    newarea= abs(x-x2)*abs(y-y2)
+                    if newarea:
+                        area=min(area,newarea)
+            seen.add((x,y))
+        if area==float('inf'): return 0
+        else: return area
+    

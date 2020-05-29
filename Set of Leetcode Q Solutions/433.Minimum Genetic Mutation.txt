@@ -1,0 +1,90 @@
+class Solution {
+public:
+    string finaly;
+    int minMutation(string start, string end, vector<string>& wL) {
+        finaly=end;
+        if(find(wL.begin(),wL.end(),end)==wL.end()) return -1;
+        vector<char> letters={'A','C','G','T'};
+        unordered_set<string> dict;
+        for(auto iL: wL) dict.insert(iL);
+        unordered_map<string,vector<string>> mp;
+        string init=start;
+        
+        
+        for(auto w: wL){
+            string check=w;
+            for(int i=0;i<w.length();i++){
+                for(int j=0;j<4;j++){
+                if(w[i]!=letters[j]){
+                    char store= w[i];
+                    w[i]=letters[j];
+                    if(dict.find(w)!=dict.end())
+                        mp[check].push_back(w);
+                    w[i]=store;
+                }
+            }
+        }
+    }
+        
+        //====================================================
+        
+        for(auto x: mp){
+            cout<<x.first<<" ";
+            for(auto k: x.second)
+                cout<<k<<" ";
+            cout<<endl;
+        }
+        //====================================================Do BFS
+        
+        long ans=INT_MAX;
+        if(dict.find(init)!=dict.end())
+            ans=bfs(mp,init);
+        
+        
+        for(int i=0;i<start.length();i++){
+            for(int j=0;j<4;j++){
+                if(start[i]!=letters[j]){
+                    char store= start[i];
+                    start[i]=letters[j];
+                    if(dict.find(start)!=dict.end())
+                        ans=min(ans,bfs(mp,start));
+                    start[i]=store;
+                }
+            }
+        }
+        return ans==INT_MAX?-1:ans;
+        
+    }
+    
+    long bfs(unordered_map<string,vector<string>>& mp,string start){
+        
+        unordered_map<string,int> vis;
+        vis[start]=1;
+        queue<string> q;
+        q.push(start);
+        int l=1;
+        bool found=false;
+        while(!q.empty()){
+            int sz=q.size();
+            while(sz--){
+                auto fr= q.front(); q.pop();
+                if(fr==finaly)
+                {
+                    found=true;
+                    break;
+                }
+                for(auto nei: mp[fr]){
+                    if(vis[nei]==0){
+                        vis[nei]=1;
+                        q.push(nei);
+                    }
+                }
+                        
+            }
+            if(found) return l;
+            l++;
+        }
+        
+        return INT_MAX;
+    }
+};
