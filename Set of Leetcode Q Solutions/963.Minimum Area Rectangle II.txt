@@ -1,0 +1,29 @@
+class Solution:
+    def minAreaFreeRect(self, points: List[List[int]]) -> float:
+        seen= set()
+        mx=float('inf')
+        def dist(point1,point2):
+            return (abs(point1[0]-point2[0])**2+abs(point1[1]-point2[1])**2)
+        
+        for i in range(len(points)):
+            seen.add((points[i][0],points[i][1]))
+            
+        for i in range(len(points)):
+            for j in range(i+1,len(points)):
+                if i==j: continue
+                    
+                cx,cy= (points[i][0]+points[j][0]),(points[i][1]+points[j][1])
+                for k in range(j+1,len(points)):
+                    if (dist(points[i],points[k])+dist(points[k],points[j]))!=dist(points[i],points[j]):
+                        continue;
+                    if [cx-points[k][0],cy-points[k][1]] in points:
+                        area= abs(dist(points[i],points[k]))*abs(dist(points[k],points[j]))
+                        if area!=0:
+                            mx=min(sqrt(area),mx)
+            
+        if mx==float('inf'): return 0
+        return mx
+                        
+                        
+                    
+        

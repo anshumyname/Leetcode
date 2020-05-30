@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int maxProduct(vector<string>& words) {
+        vector<unordered_set<char>> v;
+        for(auto wrd: words){
+            unordered_set<char> s;
+            for(auto c: wrd){
+                s.insert(c);
+            }
+            v.push_back(s);
+        }
+        
+        int ans=0;
+        for(int i=0;i<words.size();i++){
+            for(int j=i+1;j<words.size();j++){
+                if(check(v[i],v[j])){
+                    int pr=words[i].length()*words[j].length();
+                    ans=max(ans,pr);
+                }
+            }
+        }
+        
+        return ans;
+        
+    }
+    
+    bool check(unordered_set<char>& s1,unordered_set<char>& s2){
+        for(auto it: s1){
+            if(s2.find(it)!=s2.end())
+                return false;
+        }
+        
+        return true;
+    }
+};
