@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<bool> checkIfPrerequisite(int n, vector<vector<int>>& prerequisites, vector<vector<int>>& queries) {
+        vector<vector<int>> gf(n);
+        for(auto ed: prerequisites){
+            gf[ed[0]].push_back(ed[1]);
+        }
+        
+        vector<bool> v;
+        for(auto e: queries){
+            vector<int> vis(n,0);
+            v.push_back(dfs(e[0],vis,gf,e[1]));
+        }
+        
+        return v;
+        
+    }
+    
+    bool dfs(int st,vector<int>& vis,vector<vector<int>>& gf,int tar){
+        if(st==tar){
+            return true;
+        }
+        
+        vis[st]=1;
+        for(auto nei: gf[st]){
+            if(!vis[nei]){
+                if(dfs(nei,vis,gf,tar))
+                    return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    
+};

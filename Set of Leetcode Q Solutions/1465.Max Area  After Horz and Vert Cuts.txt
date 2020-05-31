@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int mod=1e9+7;
+    int maxArea(int h, int w, vector<int>& hc, vector<int>& vc) {
+        hc.insert(hc.begin(),h);
+        hc.push_back(0);
+        vc.insert(vc.begin(),0);
+        vc.push_back(w);
+        sort(hc.begin(),hc.end());
+        sort(vc.begin(),vc.end());
+        long ar=0;
+        long maxh=0;
+        long maxw=0;
+        for(int i=1;i<hc.size();i++){
+               maxh=max(maxh,(long)(hc[i]-hc[i-1]));
+        }
+  
+            for(int j=1;j<vc.size();j++){
+                maxw=max(maxw,(long)(vc[j]-vc[j-1]));
+            }
+        
+        ar= ((maxh%mod)*(maxw%mod))%mod;
+        return (int)ar;
+    }
+};

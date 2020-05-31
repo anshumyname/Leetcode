@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int m,n;
+    int cherryPickup(vector<vector<int>>& grid) {
+        m=grid.size();
+        n=grid[0].size();
+        vector<vector<vector<int>>> dp(m,vector<vector<int>> (n,vector<int> (n,-1)));
+        simulate(0,0,n-1,dp,grid);
+        return dp[0][0][n-1];
+        
+    }
+    
+    int simulate(int i,int j,int k,vector<vector<vector<int>>>& dp,vector<vector<int>>& grid){
+        if(!valid(i,j,k)) return 0;
+        if(dp[i][j][k]!=-1)
+            return dp[i][j][k];
+        
+        int ans=0;
+        int gasp=grid[i][j];
+        if(j==k)
+            gasp=0;
+        else
+            gasp=grid[i][k];
+        
+            ans=max(grid[i][j]+gasp+simulate(i+1,j-1,k-1,dp,grid),ans);
+            ans=max(grid[i][j]+gasp+simulate(i+1,j-1,k,dp,grid),ans);
+            ans=max(grid[i][j]+gasp+simulate(i+1,j-1,k+1,dp,grid),ans);
+            ans=max(grid[i][j]+gasp+simulate(i+1,j,k-1,dp,grid),ans);
+            ans=max(grid[i][j]+gasp+simulate(i+1,j,k,dp,grid),ans);
+            ans=max(grid[i][j]+gasp+simulate(i+1,j,k+1,dp,grid),ans);
+            ans=max(grid[i][j]+gasp+simulate(i+1,j+1,k-1,dp,grid),ans);
+            ans=max(grid[i][j]+gasp+simulate(i+1,j+1,k,dp,grid),ans);
+            ans=max(grid[i][j]+gasp+simulate(i+1,j+1,k+1,dp,grid),ans);
+        
+        dp[i][j][k]=ans;
+        return ans;
+    }
+    
+    
+    bool valid(int x,int y,int z){
+        return (x>=0 && x<m) && (y>=0 && y<n) && (z>=0 && z<n);
+    }
+    
+};
