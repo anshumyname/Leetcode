@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<string> removeComments(vector<string>& source) {
+        vector<string> v;
+        int flag=0;
+        string t;
+        t="";
+        for(int i=0;i<source.size();i++){
+            int n=source[i].length();
+            string s=source[i];
+            
+            for(int j=0;j<n;j++){
+                 if(j<n-1 && (s[j]=='/' && s[j+1]=='/') && !flag){
+                     j=n;
+                }
+                else if(j<n-1 && (s[j]=='/' && s[j+1]=='*') && !flag){
+                    flag=1;
+                    j++;
+                }
+                else if(j<n-1 && (s[j]=='*' && s[j+1]=='/') && flag){
+                    flag=0;
+                    j++;
+                }
+                else if(!flag){
+                    t+=s[j];
+                }
+            }
+            
+            if(t.length() && !flag){
+                v.push_back(t);
+                t="";
+            }
+        }
+        return v;
+    }
+};
