@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int n;
+    vector<int> ac;
+    int mx;
+    Solution(vector<int>& w) {
+        n=w.size();
+        ac.resize(n);
+        for(int i=0;i<n;i++){
+            ac[i]= w[i]+((i==0)?0:ac[i-1]);
+        }    
+         mx=ac[n-1];
+    }    
+    int pickIndex() {
+        int r=rand()%mx;
+        auto it = upper_bound(ac.begin(), ac.end(), r);
+        return it-ac.begin();
+    }
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(w);
+ * int param_1 = obj->pickIndex();
+ */

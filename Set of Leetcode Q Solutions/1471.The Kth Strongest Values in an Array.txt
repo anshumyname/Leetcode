@@ -1,0 +1,19 @@
+int median=0;
+class Solution {
+public:
+    static bool comp(int &x,int &y){
+        if(abs(x-median)==abs(y-median))
+            return x>y;
+        return abs(x-median)>abs(y-median);
+    }
+
+    vector<int> getStrongest(vector<int>& arr, int k) {
+        sort(arr.begin(),arr.end());
+        int n=arr.size();
+        median= arr[(n-1)/2];
+        sort(arr.begin(),arr.end(),comp);
+        vector<int> ans(arr.begin(),arr.begin()+k);
+        return ans;
+    }
+
+};
