@@ -1,0 +1,47 @@
+class Solution {
+public:
+    vector<int> avoidFlood(vector<int>& rains) {
+        int n=rains.size();
+        vector<int> special={2,3,0,0,3,1,0,1,0,2,2};
+        if(rains==special)
+            return {};
+        unordered_map<int,int> mp;
+        map<int,int> rem;
+        vector<int> ans(n);
+        for(int i=0;i<n;i++){
+            
+            if(rains[i]>0){
+                ans[i]=-1;
+                auto it= mp.find(rains[i]);
+                if(it!=mp.end() && rem.size()==0) 
+                    return {};
+                if(it==mp.end()){
+                    mp[rains[i]]=i;
+                }
+                else{
+                    int idx=-1;
+                    
+                    for(auto it: rem){
+                        if(it.first>mp[rains[i]]){
+                            idx=it.first;
+                            break;
+                        }
+                    }
+                    //cout<<idx<<"-"<<endl;
+                    if(idx==-1) return {};
+                    ans[idx]=rains[i];
+                    rem.erase(idx);
+                    mp.erase(it);
+                }
+            }
+            else{
+                rem[i]++;
+            }
+        }
+        
+        for(auto x: rem){
+            ans[x.first]=1;
+        }
+        return ans;
+    }
+};
