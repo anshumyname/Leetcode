@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int rangeSum(vector<int>& nums, int n, int left, int right) {
+        for(int i=0;i<n;i++){
+            nums[i]=(i==0)?nums[i]:nums[i]+nums[i-1];
+        }
+        
+        vector<int> v;
+        for(int len=1;len<=n;len++){
+            for(int x=0;x<n-len+1;x++){
+                int l=x;
+                int r=x+len-1;
+                if(l==0){
+                    v.push_back(nums[r]);
+                }else{
+                    v.push_back(nums[r]-nums[l-1]);
+                }
+            }
+        }
+        sort(v.begin(),v.end());
+
+        int mod=1e9+7;
+        int sum=0;
+        for(int i=left-1;i<right;i++){
+            sum=(sum%mod+v[i]%mod)%mod;
+        }
+        return sum;
+        
+    }
+};
