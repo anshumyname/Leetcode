@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int getWinner(vector<int>& arr, int k) {
+        deque<int> d;
+        int n=arr.size();
+        unordered_map<int,int> mp;
+        for(int i=0;i<n;i++){
+            d.push_back(arr[i]);
+        }
+        int prewin=-1;
+        if(k>=n) return *max_element(arr.begin(),arr.end());
+        int round=min(n,k);
+        while(1){
+            int one= d.front(); d.pop_front();
+            int second=d.front(); d.pop_front();
+            int win=max(one,second);
+            int lose= min(one,second);
+            mp[win]++;
+            if(mp[win]==round) return win; 
+            if(prewin!=-1 && prewin!=win)
+                mp[prewin]=0;
+            prewin=win;
+            d.push_front(win);
+            d.push_back(lose);
+        }
+        
+        return 0;
+    }
+};
