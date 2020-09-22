@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int minCost(string s, vector<int>& cost) {
+        int tot=0;
+        for(int i=0;i<s.length();){
+            auto x=s[i];
+            int pre=i;
+            int c=i;
+            int len=0;
+            int me=cost[c];
+            int runsum=0;
+            while(i<s.length() && x==s[i]){
+                me=max(cost[c],me);
+                runsum+=cost[c];
+                i++; c++; len++;
+            }
+            if(len>1){
+                tot+=(runsum-me);
+            }
+        }
+            
+        return tot;
+               
+    }
+};

@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int maxUniqueSplit(string s) {
+        unordered_set<string> mp;
+        auto x= help(s,mp);
+        return x;
+    }
+    int help(string s,unordered_set<string>& mp) {
+        int ans=0;
+        int n=s.length();
+        for(int l=1;l<=n;l++){
+            string  key= s.substr(0,l);
+            if(mp.find(key)==mp.end()){
+                mp.insert(key);
+                ans=max(ans,1+help(s.substr(l),mp));
+                mp.erase(key);
+            }
+            
+        }
+        return ans;    
+    }
+    
+};

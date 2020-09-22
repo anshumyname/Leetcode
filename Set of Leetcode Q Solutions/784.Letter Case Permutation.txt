@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<string> v;
+    vector<string> letterCasePermutation(string S) {
+        string s;
+        fun(0,s,S);
+        return v;
+        
+    }
+    
+    void fun(int i,string s,string& ac){
+        
+        if(i==ac.length()){
+            v.push_back(s);
+            return;
+        }
+        if(ac[i]>='0' && ac[i]<='9'){
+            fun(i+1,s+ac[i],ac);
+        }else{
+            string t;
+            t+=tolower(ac[i]);
+            fun(i+1,s+t,ac);
+            t.pop_back(); t+=toupper(ac[i]);
+            fun(i+1,s+t,ac);
+        }
+        
+    }
+};
